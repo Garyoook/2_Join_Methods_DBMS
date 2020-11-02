@@ -53,11 +53,11 @@ struct HashjoinImplementation {
 
 struct CompetitionImplementation {
   std::function<void(void* sVoid, int from, int to, int label)> const insertEdge =
-      ::HashjoinInsertEdge;
+      ::CompetitionInsertEdge;
   std::function<void(void* sVoid, int fromNode, int toNode, int label)> const deleteEdge =
-      ::HashjoinDeleteEdge;
+      ::CompetitionDeleteEdge;
   std::function<int(void* vstore, int label1, int label2, int label3)> const runQuery =
-      ::HashjoinRunQuery;
-  std::function<void*(unsigned long size)> const allocateDatabase = ::HashjoinAllocateDatabase;
-  std::function<void(void* sVoid)> const deleteDatabase = ::HashjoinDeleteDatabase;
+      ::CompetitionRunQuery;
+  std::function<void*(unsigned long size)> const allocateDatabase = ::CompetitionAllocateDatabase;
+  std::function<void(void* sVoid)> const deleteDatabase = ::CompetitionDeleteDatabase;
 };
