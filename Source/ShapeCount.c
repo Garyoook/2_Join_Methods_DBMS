@@ -2,7 +2,9 @@
 
 typedef void *SortMergeJoinDatabase;
 
-SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd);
+SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
+	return NULL;
+};
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel) {
@@ -57,7 +59,9 @@ void HashjoinDeleteDatabase(HashjoinDatabase database) {
 
 typedef void *CompetitionDatabase;
 
-CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd);
+CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
+	return NULL;
+};
 
 void CompetitionInsertEdge(CompetitionDatabase database, int fromNodeID, int toNodeID,
                            int edgeLabel) {

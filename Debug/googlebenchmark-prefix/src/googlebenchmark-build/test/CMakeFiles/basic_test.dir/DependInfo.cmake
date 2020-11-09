@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/test/basic_test.cc" "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark-build/test/CMakeFiles/basic_test.dir/basic_test.cc.o"
+  "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/test/basic_test.cc" "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark-build/test/CMakeFiles/basic_test.dir/basic_test.cc.o"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
@@ -17,13 +17,13 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/include"
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/src/../include"
+  "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/include"
+  "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/src/../include"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/benchmark.dir/DependInfo.cmake"
+  "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/benchmark.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

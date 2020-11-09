@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /opt/local/bin/cmake -E remove -f
+RM = /usr/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72
+CMAKE_SOURCE_DIR = /homes/yg9418/year3/shapecount_72
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug
+CMAKE_BINARY_DIR = /homes/yg9418/year3/shapecount_72/Debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Tests.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/Tests.dir/flags.make
 
 CMakeFiles/Tests.dir/Source/ShapeCount.c.o: CMakeFiles/Tests.dir/flags.make
 CMakeFiles/Tests.dir/Source/ShapeCount.c.o: ../Source/ShapeCount.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Tests.dir/Source/ShapeCount.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Tests.dir/Source/ShapeCount.c.o   -c /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Source/ShapeCount.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/homes/yg9418/year3/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/Tests.dir/Source/ShapeCount.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Tests.dir/Source/ShapeCount.c.o   -c /homes/yg9418/year3/shapecount_72/Source/ShapeCount.c
 
 CMakeFiles/Tests.dir/Source/ShapeCount.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Tests.dir/Source/ShapeCount.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Source/ShapeCount.c > CMakeFiles/Tests.dir/Source/ShapeCount.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /homes/yg9418/year3/shapecount_72/Source/ShapeCount.c > CMakeFiles/Tests.dir/Source/ShapeCount.c.i
 
 CMakeFiles/Tests.dir/Source/ShapeCount.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Tests.dir/Source/ShapeCount.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Source/ShapeCount.c -o CMakeFiles/Tests.dir/Source/ShapeCount.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /homes/yg9418/year3/shapecount_72/Source/ShapeCount.c -o CMakeFiles/Tests.dir/Source/ShapeCount.c.s
 
 CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o: CMakeFiles/Tests.dir/flags.make
 CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o: ../Tests/ShapeCountTests.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o -c /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Tests/ShapeCountTests.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/homes/yg9418/year3/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o -c /homes/yg9418/year3/shapecount_72/Tests/ShapeCountTests.cpp
 
 CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Tests/ShapeCountTests.cpp > CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /homes/yg9418/year3/shapecount_72/Tests/ShapeCountTests.cpp > CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.i
 
 CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Tests/ShapeCountTests.cpp -o CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /homes/yg9418/year3/shapecount_72/Tests/ShapeCountTests.cpp -o CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.s
 
 # Object files for target Tests
 Tests_OBJECTS = \
@@ -95,7 +95,7 @@ Tests: CMakeFiles/Tests.dir/Source/ShapeCount.c.o
 Tests: CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o
 Tests: CMakeFiles/Tests.dir/build.make
 Tests: CMakeFiles/Tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Tests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Tests.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +108,6 @@ CMakeFiles/Tests.dir/clean:
 .PHONY : CMakeFiles/Tests.dir/clean
 
 CMakeFiles/Tests.dir/depend:
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72 /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72 /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/CMakeFiles/Tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /homes/yg9418/year3/shapecount_72/Debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /homes/yg9418/year3/shapecount_72 /homes/yg9418/year3/shapecount_72 /homes/yg9418/year3/shapecount_72/Debug /homes/yg9418/year3/shapecount_72/Debug /homes/yg9418/year3/shapecount_72/Debug/CMakeFiles/Tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Tests.dir/depend
 

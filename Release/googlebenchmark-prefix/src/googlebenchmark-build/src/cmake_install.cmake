@@ -1,8 +1,8 @@
-# Install script for directory: /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/src
+# Install script for directory: /homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/deps")
+  set(CMAKE_INSTALL_PREFIX "/homes/yg9418/year3/shapecount_72/Release/deps")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -27,47 +27,44 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   endif()
 endif()
 
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
+endif()
+
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/libbenchmark.a")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark.a" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark.a")
-    execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/ranlib" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark.a")
-  endif()
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/libbenchmark.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/libbenchmark_main.a")
-  if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark_main.a" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark_main.a")
-    execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/ranlib" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbenchmark_main.a")
-  endif()
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/libbenchmark_main.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/include/benchmark" FILES_MATCHING REGEX "/[^/]*\\.[^/]*h$")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/include/benchmark" FILES_MATCHING REGEX "/[^/]*\\.[^/]*h$")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark" TYPE FILE FILES
-    "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmarkConfig.cmake"
-    "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmarkConfigVersion.cmake"
+    "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmarkConfig.cmake"
+    "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmarkConfigVersion.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmark.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/generated/benchmark.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark/benchmarkTargets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark/benchmarkTargets.cmake"
-         "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets.cmake")
+         "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark/benchmarkTargets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -76,9 +73,9 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark" TYPE FILE FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark" TYPE FILE FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark" TYPE FILE FILES "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets-release.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/benchmark" TYPE FILE FILES "/homes/yg9418/year3/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark-build/src/CMakeFiles/Export/lib/cmake/benchmark/benchmarkTargets-release.cmake")
   endif()
 endif()
 

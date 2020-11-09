@@ -5,18 +5,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Source/ShapeCount.c" "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles/Tests.dir/Source/ShapeCount.c.o"
+  "/homes/yg9418/year3/shapecount_72/Source/ShapeCount.c" "/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/Tests.dir/Source/ShapeCount.c.o"
   )
-set(CMAKE_C_COMPILER_ID "AppleClang")
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "deps/include"
   )
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Tests/ShapeCountTests.cpp" "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o"
+  "/homes/yg9418/year3/shapecount_72/Tests/ShapeCountTests.cpp" "/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

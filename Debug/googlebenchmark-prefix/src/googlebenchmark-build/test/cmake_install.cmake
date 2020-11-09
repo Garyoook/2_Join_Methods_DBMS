@@ -1,8 +1,8 @@
-# Install script for directory: /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/test
+# Install script for directory: /homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/deps")
+  set(CMAKE_INSTALL_PREFIX "/homes/yg9418/year3/shapecount_72/Debug/deps")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -25,6 +25,11 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   else()
     set(CMAKE_INSTALL_COMPONENT)
   endif()
+endif()
+
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
 # Is this installation the result of a crosscompile?

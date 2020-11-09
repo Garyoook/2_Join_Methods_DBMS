@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/local/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /opt/local/bin/cmake -E remove -f
+RM = /usr/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72
+CMAKE_SOURCE_DIR = /homes/yg9418/year3/shapecount_72
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release
+CMAKE_BINARY_DIR = /homes/yg9418/year3/shapecount_72/Release
 
 # Utility rule file for catch2.
 
@@ -64,56 +64,56 @@ CMakeFiles/catch2-complete: catch2-prefix/src/catch2-stamp/catch2-patch
 CMakeFiles/catch2-complete: catch2-prefix/src/catch2-stamp/catch2-configure
 CMakeFiles/catch2-complete: catch2-prefix/src/catch2-stamp/catch2-build
 CMakeFiles/catch2-complete: catch2-prefix/src/catch2-stamp/catch2-install
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Completed 'catch2'"
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles
-	/opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles/catch2-complete
-	/opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-done
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Completed 'catch2'"
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/CMakeFiles
+	/usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/CMakeFiles/catch2-complete
+	/usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-done
 
 catch2-prefix/src/catch2-stamp/catch2-install: catch2-prefix/src/catch2-stamp/catch2-build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Performing install step for 'catch2'"
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && $(MAKE) install
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && /opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-install
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Performing install step for 'catch2'"
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && $(MAKE) install
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && /usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-install
 
 catch2-prefix/src/catch2-stamp/catch2-mkdir:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Creating directories for 'catch2'"
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/tmp
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/.cmake-downloads
-	/opt/local/bin/cmake -E make_directory /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp
-	/opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-mkdir
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Creating directories for 'catch2'"
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/tmp
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp
+	/usr/bin/cmake -E make_directory /homes/yg9418/.cmake-downloads
+	/usr/bin/cmake -E make_directory /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp
+	/usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-mkdir
 
 catch2-prefix/src/catch2-stamp/catch2-download: catch2-prefix/src/catch2-stamp/catch2-urlinfo.txt
 catch2-prefix/src/catch2-stamp/catch2-download: catch2-prefix/src/catch2-stamp/catch2-mkdir
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'catch2'"
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src && /opt/local/bin/cmake -P /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/download-catch2.cmake
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src && /opt/local/bin/cmake -P /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/verify-catch2.cmake
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src && /opt/local/bin/cmake -P /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/extract-catch2.cmake
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src && /opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-download
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'catch2'"
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src && /usr/bin/cmake -P /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/download-catch2.cmake
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src && /usr/bin/cmake -P /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/verify-catch2.cmake
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src && /usr/bin/cmake -P /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/extract-catch2.cmake
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src && /usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-download
 
 catch2-prefix/src/catch2-stamp/catch2-update: catch2-prefix/src/catch2-stamp/catch2-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "No update step for 'catch2'"
-	/opt/local/bin/cmake -E echo_append
-	/opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-update
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "No update step for 'catch2'"
+	/usr/bin/cmake -E echo_append
+	/usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-update
 
 catch2-prefix/src/catch2-stamp/catch2-patch: catch2-prefix/src/catch2-stamp/catch2-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "No patch step for 'catch2'"
-	/opt/local/bin/cmake -E echo_append
-	/opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-patch
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "No patch step for 'catch2'"
+	/usr/bin/cmake -E echo_append
+	/usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-patch
 
 catch2-prefix/src/catch2-stamp/catch2-configure: catch2-prefix/tmp/catch2-cfgcmd.txt
 catch2-prefix/src/catch2-stamp/catch2-configure: catch2-prefix/src/catch2-stamp/catch2-update
 catch2-prefix/src/catch2-stamp/catch2-configure: catch2-prefix/src/catch2-stamp/catch2-patch
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Performing configure step for 'catch2'"
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && /opt/local/bin/cmake -DCMAKE_INSTALL_PREFIX=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/deps -DCATCH_BUILD_TESTING=NO -DBUILD_TESTING=NO -DCATCH_ENABLE_WERROR=NO -DCATCH_INSTALL_DOCS=NO -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/Library/Developer/CommandLineTools/usr/bin/c++ -DCMAKE_CXX_FLAGS= "-GUnix Makefiles" /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && /opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-configure
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Performing configure step for 'catch2'"
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && /usr/bin/cmake -DCMAKE_INSTALL_PREFIX=/homes/yg9418/year3/shapecount_72/Release/deps -DCATCH_BUILD_TESTING=NO -DBUILD_TESTING=NO -DCATCH_ENABLE_WERROR=NO -DCATCH_INSTALL_DOCS=NO -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/c++ -DCMAKE_CXX_FLAGS= "-GUnix Makefiles" /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && /usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-configure
 
 catch2-prefix/src/catch2-stamp/catch2-build: catch2-prefix/src/catch2-stamp/catch2-configure
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Performing build step for 'catch2'"
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && $(MAKE)
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-build && /opt/local/bin/cmake -E touch /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/homes/yg9418/year3/shapecount_72/Release/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Performing build step for 'catch2'"
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && $(MAKE)
+	cd /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-build && /usr/bin/cmake -E touch /homes/yg9418/year3/shapecount_72/Release/catch2-prefix/src/catch2-stamp/catch2-build
 
 catch2: CMakeFiles/catch2
 catch2: CMakeFiles/catch2-complete
@@ -138,6 +138,6 @@ CMakeFiles/catch2.dir/clean:
 .PHONY : CMakeFiles/catch2.dir/clean
 
 CMakeFiles/catch2.dir/depend:
-	cd /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72 /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72 /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release /Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/CMakeFiles/catch2.dir/DependInfo.cmake --color=$(COLOR)
+	cd /homes/yg9418/year3/shapecount_72/Release && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /homes/yg9418/year3/shapecount_72 /homes/yg9418/year3/shapecount_72 /homes/yg9418/year3/shapecount_72/Release /homes/yg9418/year3/shapecount_72/Release /homes/yg9418/year3/shapecount_72/Release/CMakeFiles/catch2.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/catch2.dir/depend
 

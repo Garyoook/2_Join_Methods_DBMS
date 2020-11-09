@@ -1,7 +1,7 @@
 # Make file names absolute:
 #
-get_filename_component(filename "/Users/yg9418/.cmake-downloads/master.zip" ABSOLUTE)
-get_filename_component(directory "/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark" ABSOLUTE)
+get_filename_component(filename "/homes/yg9418/.cmake-downloads/master.zip" ABSOLUTE)
+get_filename_component(directory "/homes/yg9418/year3/shapecount_72/Debug/googlebenchmark-prefix/src/googlebenchmark" ABSOLUTE)
 
 message(STATUS "extracting...
      src='${filename}'

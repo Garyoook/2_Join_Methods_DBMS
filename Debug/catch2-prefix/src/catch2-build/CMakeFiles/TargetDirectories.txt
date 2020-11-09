@@ -1,0 +1,8 @@
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/install/strip.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/install/local.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/edit_cache.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/package_source.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/install.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/list_install_components.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/rebuild_cache.dir
+/homes/yg9418/year3/shapecount_72/Debug/catch2-prefix/src/catch2-build/CMakeFiles/package.dir

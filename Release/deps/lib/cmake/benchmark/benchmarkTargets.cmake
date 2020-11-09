@@ -55,6 +55,7 @@ add_library(benchmark::benchmark STATIC IMPORTED)
 
 set_target_properties(benchmark::benchmark PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "-pthread;/usr/lib/x86_64-linux-gnu/librt.so"
 )
 
 # Create imported target benchmark::benchmark_main
