@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/include/benchmark/benchmark.h
+stdint.h
+-
+algorithm
+-
+cassert
+-
+cstddef
+-
+iosfwd
+-
+map
+-
+set
+-
+string
+-
+utility
+-
+vector
+-
+initializer_list
+-
+type_traits
+-
+utility
+-
+intrin.h
+-
+
+/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/test/fixture_test.cc
+benchmark/benchmark.h
+/Users/yg9418/Desktop/Year3/Advanced_Databases/shapecount_72/Release/googlebenchmark-prefix/src/googlebenchmark/test/benchmark/benchmark.h
+cassert
+-
+memory
+-
+
