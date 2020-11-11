@@ -7,7 +7,7 @@
 typedef void *SortMergeJoinDatabase;
 
 SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
-	return NULL;
+    return NULL;
 };
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
@@ -40,7 +40,7 @@ typedef struct HashEdge{
 } HashEdge;
 
 typedef struct HashJoinTable {
-    HashEdge *hash_table;
+//    HashEdge *hash_table;
     HashEdge **storage;
     int size;
     unsigned long max_alloc_size;
@@ -52,14 +52,11 @@ void printEdge(HashEdge *e) {
 
 HashjoinDatabase HashjoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-    table->hash_table = (HashEdge *)malloc(sizeof(HashEdge) * totalNumberOfEdgesInTheEnd);
-    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
+//    table->hash_table = (HashEdge *)malloc(sizeof(HashEdge) * totalNumberOfEdgesInTheEnd);
+//    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
 
     table->storage = (HashEdge **)malloc(sizeof(HashEdge *) * totalNumberOfEdgesInTheEnd);
 
-//    for (int i = 0; i<totalNumberOfEdgesInTheEnd; i++) {
-//        table->storage[i].label_edge = -1;
-//    }
     table->size = 0;
     table->max_alloc_size = totalNumberOfEdgesInTheEnd;
 
@@ -91,18 +88,25 @@ void HashjoinInsertEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
     edge->to_node = toNodeID;
     db->storage[db->size] = edge;
     db->size += 1;
-
 }
 
 int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, int edgeLabel3) {
+    int count = 0;
     HashJoinTable *build = (HashJoinTable *) database;
+    HashEdge * hash_table = (HashEdge *)malloc(sizeof(HashEdge) * build->max_alloc_size);
+
+    for (int i = 0; i < build->max_alloc_size; i++) {
+        (hash_table + i)->from_node = -1;
+    }
+
+    // build phase:
     for (int i = 0; i < build->size; i++) {
         HashEdge *buildInput = build->storage[i];
         int hash_value = hash_mod(buildInput->from_node);
-        while (((HashJoinTable *) database)->hash_table[hash_value].label_edge != -1) {
+        while (hash_table[hash_value].from_node != -1) {
             hash_value = nextSlot(hash_value);
         }
-        ((HashJoinTable *) database)->hash_table[hash_value] = *buildInput;
+        hash_table[hash_value] = *buildInput;
     }
 
     HashJoinTable *probe = (HashJoinTable *) database;
@@ -110,34 +114,37 @@ int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, 
         bool found = false;
         HashEdge *probeInput = probe->storage[i];
         int hash_value = hash_mod(probeInput->from_node);
-        while(probe->hash_table[hash_value].label_edge !=  -1 &&
-              probe->hash_table[hash_value].from_node != probeInput->from_node) {
+        while(hash_table[hash_value].label_edge !=  -1 &&
+              hash_table[hash_value].from_node != probeInput->from_node) {
             hash_value = nextSlot(hash_value);
         }
-        if (probe->hash_table[hash_value].from_node == probeInput->from_node) {
+        if (hash_table[hash_value].from_node == probeInput->from_node) {
             found = true;
         }
     }
-    return 0;
+    free(hash_table);
+    return count;
 }
 
 void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID, int edgeLabel) {
     HashJoinTable *db = (HashJoinTable *) database;
-    for(int i = 0; i < db->size; i++) {
+    for(int i = 0; i < db->max_alloc_size; i++) {
         free(db->storage[i]);
-        free(db->hash_table);
     }
-
 }
 
 void HashjoinDeleteDatabase(HashjoinDatabase database) {
-    free(database);
+    HashJoinTable *db = (HashJoinTable *) database;
+    for(int i = 0; i < db->size; i++) {
+        free(db->storage[i]);
+    }
+    free(db);
 }
 
 typedef void *CompetitionDatabase;
 
 CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
-	return NULL;
+    return NULL;
 };
 
 void CompetitionInsertEdge(CompetitionDatabase database, int fromNodeID, int toNodeID,
@@ -163,15 +170,18 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 
 }
 
-//int main(void) {
-//    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(5);
-//    HashjoinInsertEdge(db, 2,1,0);
-//    HashjoinInsertEdge(db, 0,2,1);
-//    HashjoinInsertEdge(db, 1,0,2);
-//    printEdge(((HashJoinTable *) db)->storage[0]);
-//    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
-//        HashEdge *a = ((HashJoinTable *) db)->storage[i];
-//        printEdge(a);
-//    }
-//    return 0;
-//}
+int main(void) {
+    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(5);
+    HashjoinInsertEdge(db, 2,1,0);
+    HashjoinInsertEdge(db, 0,2,1);
+    HashjoinInsertEdge(db, 1,0,2);
+
+    HashjoinRunQuery(db, 0, 1, 2);
+    printEdge(((HashJoinTable *) db)->storage[0]);
+    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
+        HashEdge *a = ((HashJoinTable *) db)->storage[i];
+        printEdge(a);
+    }
+    HashjoinDeleteDatabase(db);
+    return 0;
+}
