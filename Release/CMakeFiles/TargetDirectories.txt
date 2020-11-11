@@ -1,6 +1,0 @@
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/edit_cache.dir
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/Benchmarks.dir
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/Tests.dir
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/catch2.dir
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/rebuild_cache.dir
-/homes/yg9418/year3/shapecount_72/Release/CMakeFiles/googlebenchmark.dir

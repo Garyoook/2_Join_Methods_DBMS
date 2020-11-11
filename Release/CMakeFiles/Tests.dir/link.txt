@@ -1,1 +1,0 @@
-/usr/bin/c++  -O3 -DNDEBUG   CMakeFiles/Tests.dir/Source/ShapeCount.c.o CMakeFiles/Tests.dir/Tests/ShapeCountTests.cpp.o  -o Tests 
