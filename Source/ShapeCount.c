@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include<stdlib.h>
-#include<string.h>
 #include<stdio.h>
 #include<stdbool.h>
 
@@ -170,18 +169,18 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 
 }
 
-int main(void) {
-    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(5);
-    HashjoinInsertEdge(db, 2,1,0);
-    HashjoinInsertEdge(db, 0,2,1);
-    HashjoinInsertEdge(db, 1,0,2);
-
-    HashjoinRunQuery(db, 0, 1, 2);
-    printEdge(((HashJoinTable *) db)->storage[0]);
-    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
-        HashEdge *a = ((HashJoinTable *) db)->storage[i];
-        printEdge(a);
-    }
-    HashjoinDeleteDatabase(db);
-    return 0;
-}
+//int main(void) {
+//    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(5);
+//    HashjoinInsertEdge(db, 2,1,0);
+//    HashjoinInsertEdge(db, 0,2,1);
+//    HashjoinInsertEdge(db, 1,0,2);
+//
+//    HashjoinRunQuery(db, 0, 1, 2);
+//    printEdge(((HashJoinTable *) db)->storage[0]);
+//    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
+//        HashEdge *a = ((HashJoinTable *) db)->storage[i];
+//        printEdge(a);
+//    }
+//    HashjoinDeleteDatabase(db);
+//    return 0;
+//}
