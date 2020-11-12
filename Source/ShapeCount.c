@@ -90,12 +90,15 @@ void HashjoinInsertEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
     db->size += 1;
 }
 
-int HashJoin(HashEdge **build, int build_size, HashEdge **probe, int probe_size, unsigned long max_alloc_size) {
+int HashJoin(HashEdge **build, int build_size, HashEdge **probe2, int probe2_size, HashEdge **probe3, int probe3_size, unsigned long max_alloc_size) {
     int count = 0;
+    HashEdge **result1 = (HashEdge **)malloc(sizeof(HashEdge*) * probe2_size);
     HashEdge hash_table[(int) pow(2, (double) max_alloc_size)]; // = (HashEdge *)malloc(sizeof(HashEdge) * max_alloc_size);
+    HashEdge hash_table2[(int) pow(2, (double) max_alloc_size)];
 
     for (int i = 0; i < pow(2, (double)max_alloc_size); i++) {
         (hash_table + i)->label_edge = -1;
+        (hash_table2 + i)->label_edge = -1;
     }
 
     // build phase:
@@ -109,20 +112,40 @@ int HashJoin(HashEdge **build, int build_size, HashEdge **probe, int probe_size,
     }
 
     // probe phase:
-    for(int i = 0; i < probe_size; i++) {
-        bool found = false;
-        HashEdge *probeInput = probe[i];
+    for(int i = 0; i < probe2_size; i++) {
+        HashEdge *probeInput = probe2[i];
         int hash_value = hash_mod(probeInput->from_node);
+
         while(hash_table[hash_value].label_edge !=  -1 &&
               hash_table[hash_value].to_node != probeInput->from_node) {
             hash_value = nextSlot(hash_value);
         }
         if (hash_table[hash_value].to_node == probeInput->from_node) {
-            found = true;
-            count++;
+            *(result1 + count) = probeInput;
+            // build for 2nd hash table:
+            int hash_value2 = hash_mod(probeInput->to_node);
+            while(hash_table2[hash_value2].label_edge != -1) {
+                hash_value2 = nextSlot(hash_value2);
+            }
+            hash_table2[hash_value2] = *probeInput;
         }
     }
-    free(hash_table);
+
+    // second probe phase:
+    for (int i = 0; i < probe3_size; i++) {
+        HashEdge *probeInput = probe3[i];
+        int hash_value2 = hash_mod(probeInput->from_node);
+
+        while(hash_table2[hash_value2].label_edge !=  -1 &&
+              hash_table2[hash_value2].to_node != probeInput->from_node) {
+            hash_value2 = nextSlot(hash_value2);
+        }
+        if (hash_table2[hash_value2].to_node == probeInput->from_node) {
+            count++;
+        }
+
+        // probe from the 2nd hash table:
+    }
     return count;
 }
 
@@ -151,15 +174,13 @@ int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, 
         }
     }
 
-    int count12 = HashJoin(db_label1, size1, db_label2, size2, db->max_alloc_size);
-    int count23 = HashJoin(db_label2, size2, db_label3, size3, db->max_alloc_size);
-    int count13 = HashJoin(db_label1, size1, db_label2, size3, db->max_alloc_size);
+    int count_result = HashJoin(db_label1, size1, db_label2, size2, db_label3, size3, db->max_alloc_size);
 
     free(db_label1);
     free(db_label2);
     free(db_label3);
 
-    return 0;
+    return count_result;
 }
 
 void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID, int edgeLabel) {
@@ -206,23 +227,23 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 
 }
 
-int main(void) {
-    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(10);
-    HashjoinInsertEdge(db, 1,5,0);
-    HashjoinInsertEdge(db, 5,6,1);
-    HashjoinInsertEdge(db, 6,6,1);
-    HashjoinInsertEdge(db, 5,6,1);
-    HashjoinInsertEdge(db, 3,6,1);
-    HashjoinInsertEdge(db, 3,6,1);
-    HashjoinInsertEdge(db, 3,6,1);
-    HashjoinInsertEdge(db, 3,6,1);
-
-    HashjoinRunQuery(db, 0, 1, 2);
-    printEdge(((HashJoinTable *) db)->storage[0]);
-    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
-        HashEdge *a = ((HashJoinTable *) db)->storage[i];
-        printEdge(a);
-    }
-    HashjoinDeleteDatabase(db);
-    return 0;
-}
+//int main(void) {
+//    HashjoinDatabase db = (HashEdge *) HashjoinAllocateDatabase(10);
+//    HashjoinInsertEdge(db, 1,5,0);
+//    HashjoinInsertEdge(db, 5,6,1);
+//    HashjoinInsertEdge(db, 6,1,2);
+//    HashjoinInsertEdge(db, 5,6,1);
+//    HashjoinInsertEdge(db, 3,6,1);
+//    HashjoinInsertEdge(db, 3,6,1);
+//    HashjoinInsertEdge(db, 3,6,1);
+//    HashjoinInsertEdge(db, 3,6,1);
+//
+//    HashjoinRunQuery(db, 0, 1, 2);
+////    printEdge(((HashJoinTable *) db)->storage[0]);
+//    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
+//        HashEdge *a = ((HashJoinTable *) db)->storage[i];
+//        printEdge(a);
+//    }
+//    HashjoinDeleteDatabase(db);
+//    return 0;
+//}
