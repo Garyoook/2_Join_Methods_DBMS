@@ -1,18 +1,76 @@
 #include <stddef.h>
 #include<stdlib.h>
 #include<string.h>
-#include<stdio.h>
-#include<stdbool.h>
+#include <stdio.h>
+
+typedef struct Edge{
+    int label_edge, from_node, to_node;
+} Edge;
+
+typedef struct SMDB{
+     Edge **edges;
+    int size;
+    unsigned long max_size;
+} SMDB;
 
 typedef void *SortMergeJoinDatabase;
+Edge **insert(Edge *e, SMDB *db);
+void printDB(struct SMDB *db);
 
 SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
-    return NULL;
-};
+    struct SMDB *db = (struct SMDB *) malloc(sizeof(struct SMDB));
+    Edge ** data = (Edge **) malloc(sizeof(Edge*) * totalNumberOfEdgesInTheEnd);
+    db->edges = data;
+    db->size = 0;
+    db->max_size = totalNumberOfEdgesInTheEnd;
+    return (SortMergeJoinDatabase) db;
+}
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel) {
-    // TODO: finish this function.
+    Edge *edge = (Edge *) malloc(sizeof(Edge));
+    edge->from_node = fromNodeID;
+    edge->to_node = toNodeID;
+    edge->label_edge = edgeLabel;
+    SMDB *db = (SMDB *) database;
+    db->edges = insert(edge,db);
+    db->size++;
+}
+
+Edge **insert(Edge *e, SMDB *db) {
+    //sorting while inserting, sorted by from
+
+    Edge **cur = db->edges;
+    int pos = 0;
+    int n = db->size;
+
+    if (n == 0){
+        cur[0] = e;
+
+        return cur;
+    }
+    for (int i = 0; i < n; i++){
+        if ( cur[i]->from_node > e->from_node){
+          pos = i;
+          break;
+        }
+    }
+
+
+    for (int c = n - 1; c >= pos; c--){
+        cur[c+1] =cur[c];
+    }
+    cur[pos] = e;
+    return cur;
+}
+
+void printDB(struct SMDB *db){
+    int n = db->size;
+    Edge **edges = db->edges;
+    for(int i = 0; i < n; i++){
+        printf("from:%d, to:%d, Label:%d\n",edges[i]->from_node,edges[i]->to_node,edges[i]->label_edge);
+
+    }
 }
 
 int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int edgeLabel2,
@@ -30,7 +88,7 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
 
 void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database) {
     // TODO: finish this function.
-
+    free(database);
 }
 
 typedef void *HashjoinDatabase;
@@ -51,16 +109,10 @@ void printEdge(HashEdge *e) {
 }
 
 HashjoinDatabase HashjoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
-    HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-//    table->hash_table = (HashEdge *)malloc(sizeof(HashEdge) * totalNumberOfEdgesInTheEnd);
-//    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
-
-    table->storage = (HashEdge **)malloc(sizeof(HashEdge *) * totalNumberOfEdgesInTheEnd);
-
-    table->size = 0;
-    table->max_alloc_size = totalNumberOfEdgesInTheEnd;
-
-    return table;
+    HashEdge *data = (HashEdge *) malloc(sizeof(HashEdge) * totalNumberOfEdgesInTheEnd);
+    memset(data, 0, sizeof(*data) * totalNumberOfEdgesInTheEnd);
+    return (HashjoinDatabase) data;
+    return NULL;
 }
 
 int hash_mod(int input);
