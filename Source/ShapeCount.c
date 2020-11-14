@@ -20,24 +20,23 @@ Edge **insert(Edge *e, SMDB *db);
 void printDB(struct SMDB *db);
 
 SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd){
-//    struct SMDB *db = (struct SMDB *) malloc(sizeof(struct SMDB));
-//    Edge ** data = (Edge **) malloc(sizeof(Edge*) * totalNumberOfEdgesInTheEnd);
-//    db->edges = data;
-//    db->size = 0;
-//    db->max_size = totalNumberOfEdgesInTheEnd;
-//    return (SortMergeJoinDatabase) db;
-    return NULL;
+    struct SMDB *db = (struct SMDB *) malloc(sizeof(struct SMDB));
+    Edge ** data = (Edge **) malloc(sizeof(Edge*) * totalNumberOfEdgesInTheEnd);
+    db->edges = data;
+    db->size = 0;
+    db->max_size = totalNumberOfEdgesInTheEnd;
+    return (SortMergeJoinDatabase) db;
 }
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel) {
-//    Edge *edge = (Edge *) malloc(sizeof(Edge));
-//    edge->from_node = fromNodeID;
-//    edge->to_node = toNodeID;
-//    edge->label_edge = edgeLabel;
-//    SMDB *db = (SMDB *) database;
-//    db->edges = insert(edge,db);
-//    db->size++;
+    Edge *edge = (Edge *) malloc(sizeof(Edge));
+    edge->from_node = fromNodeID;
+    edge->to_node = toNodeID;
+    edge->label_edge = edgeLabel;
+    SMDB *db = (SMDB *) database;
+    db->edges = insert(edge,db);
+    db->size++;
 }
 
 Edge **insert(Edge *e, SMDB *db) {
@@ -91,7 +90,7 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
 
 void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database) {
     // TODO: finish this function.
-//    free(database);
+    free(database);
 }
 
 typedef void *HashjoinDatabase;
