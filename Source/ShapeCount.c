@@ -30,13 +30,13 @@ SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfE
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel) {
-//    Edge *edge = (Edge *) malloc(sizeof(Edge));
-//    edge->from_node = fromNodeID;
-//    edge->to_node = toNodeID;
-//    edge->label_edge = edgeLabel;
-//    SMDB *db = (SMDB *) database;
-//    db->edges = insert(edge,db);
-//    db->size++;
+    Edge *edge = (Edge *) malloc(sizeof(Edge));
+    edge->from_node = fromNodeID;
+    edge->to_node = toNodeID;
+    edge->label_edge = edgeLabel;
+    SMDB *db = (SMDB *) database;
+    db->edges = insert(edge,db);
+    db->size++;
 }
 
 Edge **insert(Edge *e, SMDB *db) {
@@ -90,7 +90,7 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
 
 void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database) {
     // TODO: finish this function.
-//    free(database);
+    free(database);
 }
 
 typedef void *HashjoinDatabase;
