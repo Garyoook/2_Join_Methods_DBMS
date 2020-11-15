@@ -104,6 +104,7 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     SMDB *db = (SMDB *) database;
     int n = db->size;
     Edge_table **edges = db->edges;
+    //printDB(db);
     SMDB *first_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
     SMDB *second_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
     SMDB *third_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
@@ -121,9 +122,14 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
 
     //compare firstEdge.to = secondEdge.from and firstEdge.label = 0
     SMDB *first_result = connectEdges(first_edges, second_edges,second_edges->size);
+    //printf("%d\n", first_result->max_size);
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
     SMDB *second_result = connectEdges(first_result,third_edges,first_result->max_size);
-    return second_result->max_size;
+    // printf("%d\n", second_result->max_size);
+    //printDB(second_result);
+    SMDB *third_result = connectEdges(second_result,first_edges,second_result->max_size);
+    //printf("%d\n", third_result->max_size);
+    return third_result->max_size;
 }
 
 struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max) {
@@ -133,10 +139,9 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int m
     int righti = 0;
     int leftsize = first_edges->size;
     int rightsize = second_edges->size;
-    int resultsize = 0;
     Edge_table **leftEdges = first_edges->edges;
     Edge_table **rightEdges = second_edges->edges;
-    Edge_table **result = (Edge_table **) malloc(sizeof(Edge_table*) * rightsize);
+    Edge_table **first_result = (Edge_table **) malloc(sizeof(struct Edge*) *rightsize);
     int count = 0;
     while (lefti < leftsize && righti < rightsize){
         if (leftEdges[lefti]->to_node < rightEdges[righti]->from_node){
@@ -144,24 +149,24 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int m
         } else if(leftEdges[lefti]->to_node > rightEdges[righti]->from_node){
             righti++;
         } else {
-            int j = lefti;
-            while (j < leftsize && leftEdges[j]->to_node == rightEdges[righti]->from_node){
-                resultsize++;
-                j++;
-            }
-            *(result + count) = rightEdges[righti++];
+            *(first_result + count) =rightEdges[righti];
             count++;
+            righti++;
         }
     }
     SMDB *db = (SMDB *) SortMergeJoinAllocateDatabase(rightsize);
-    db->edges = result;
+    db->edges = first_result;
     db->size = count;
-    db->max_size = resultsize;
+    db->max_size = count < max && count != 0? max : count;
     return db;
 }
 
 void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel) {
+/*    Edge *edge = (Edge *) malloc(sizeof(Edge));
+    edge->from_node = fromNodeID;
+    edge->to_node = toNodeID;
+    edge->label_edge = edgeLabel;*/
     //search the position of the given edge
     SMDB *db = (SMDB *) database;
     int n = db->size;
@@ -424,3 +429,15 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 
 }
 
+/*
+int main(void){
+    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(32);
+    SortMergeJoinInsertEdge(db, 0, 1, 0);
+    SortMergeJoinInsertEdge(db, 1, 2, 0);
+    SortMergeJoinInsertEdge(db, 2, 0, 0);
+    printDB(db);
+    SortMergeJoinDeleteEdge(db, 0, 1, 0);
+    printDB(db);
+    free(db);
+}
+*/
