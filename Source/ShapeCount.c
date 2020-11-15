@@ -193,7 +193,7 @@ void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database) {
 typedef void *HashjoinDatabase;
 
 typedef struct HashJoinTable {
-//    Edge_sp *hash_table;
+//    Edge_table *hash_table;
     Edge_table **storage;
     int size;
     unsigned long max_alloc_size;
@@ -395,6 +395,7 @@ void HashjoinDeleteDatabase(HashjoinDatabase database) {
     free(db->storage);
     free(db);
 }
+
 
 typedef void *CompetitionDatabase;
 
