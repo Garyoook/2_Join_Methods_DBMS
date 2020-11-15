@@ -407,10 +407,10 @@ typedef void *CompetitionDatabase;
 
 CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-//    table->hash_table = (Edge_table *)malloc(sizeof(Edge_sp) * totalNumberOfEdgesInTheEnd);
+//    table->hash_table = (Edge_sp *)malloc(sizeof(Edge_sp) * totalNumberOfEdgesInTheEnd);
 //    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
 
-    table->storage = (Edge_table **)malloc(sizeof(Edge_table *) * totalNumberOfEdgesInTheEnd);
+    table->storage = (Edge_sp **)malloc(sizeof(Edge_sp *) * totalNumberOfEdgesInTheEnd);
 
     table->size = 0;
     table->max_alloc_size = totalNumberOfEdgesInTheEnd;
@@ -424,7 +424,7 @@ void CompetitionInsertEdge(CompetitionDatabase database, int fromNodeID, int toN
         printf("Exceeds maximum size limit!\n");
         return;
     }
-    Edge_table *edge = (Edge_table *) malloc(sizeof(Edge_table));
+    Edge_sp *edge = (Edge_sp *) malloc(sizeof(Edge_sp));
     edge->label_edge = edgeLabel;
     edge->from_node = fromNodeID;
     edge->to_node = toNodeID;
@@ -435,9 +435,9 @@ void CompetitionInsertEdge(CompetitionDatabase database, int fromNodeID, int toN
 int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLabel2, int edgeLabel3) {
     HashJoinTable *db = (HashJoinTable *) database;
 
-    Edge_table **db_label1 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label2 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label3 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
+    Edge_sp **db_label1 = (Edge_sp **)malloc(sizeof(Edge_sp *) * db->size);
+    Edge_sp **db_label2 = (Edge_sp **)malloc(sizeof(Edge_sp *) * db->size);
+    Edge_sp **db_label3 = (Edge_sp **)malloc(sizeof(Edge_sp *) * db->size);
     int size1 = 0, size2 = 0, size3 = 0;
 
 
@@ -519,7 +519,7 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 //
 ////    printEdge(((HashJoinTable *) db)->storage[0]);
 //    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
-//        Edge_table *a = ((HashJoinTable *) db)->storage[i];
+//        Edge_sp *a = ((HashJoinTable *) db)->storage[i];
 //        printEdge(a);
 //    }
 //    int count = HashjoinRunQuery(db, 0, 1, 2);
