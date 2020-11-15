@@ -340,11 +340,11 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
         }
     }
 
-    free(result1);
-    free(result2);
-    free(hash_table);
-    free(hash_table2);
-    free(hash_table3);
+//    free(result1);
+//    free(result2);
+//    free(hash_table);
+//    free(hash_table2);
+//    free(hash_table3);
     return count;
 }
 
