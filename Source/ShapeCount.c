@@ -311,36 +311,40 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
         }
         if (hash_table2[hash_value2].from_node == probeInput->to_node) {
             *(result2 + (result2_size++)) = probeInput;
+//            count++;
+        }
+    }
+
+    // build phase from edges3 to edges1:
+    for (int i = 0; i < edges1_size; i++) {
+        Edge_table *probeInput = edges1[i];
+        // build for 2nd hash table:
+        int hash_value3 = hash_mod(probeInput->from_node);
+        while(hash_table3[hash_value3].label_edge != -1) {
+            hash_value3 = nextSlot(hash_value3);
+        }
+        hash_table3[hash_value3] = *probeInput;
+    }
+
+    // 3rd probe phase:
+    for (int j = 0; j < result2_size; j++) {
+        Edge_table *probeInput = result2[j];
+        int hash_value3 = hash_mod(probeInput->to_node);
+
+        while(hash_table3[hash_value3].label_edge !=  -1 &&
+              hash_table2[hash_value3].from_node != probeInput->to_node) {
+            hash_value3 = nextSlot(hash_value3);
+        }
+        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
             count++;
         }
     }
 
-//    // build phase from edges3 to edges1:
-//    for (int i = 0; i < edges1_size; i++) {
-//        Edge_table *probeInput = edges1[i];
-//        // build for 2nd hash table:
-//        int hash_value3 = hash_mod(probeInput->from_node);
-//        while(hash_table3[hash_value3].label_edge != -1) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        hash_table3[hash_value3] = *probeInput;
-//    }
-//
-//    // 3rd probe phase:
-//    for (int j = 0; j < result2_size; j++) {
-//        Edge_table *probeInput = result2[j];
-//        int hash_value3 = hash_mod(probeInput->to_node);
-//
-//        while(hash_table3[hash_value3].label_edge !=  -1 &&
-//              hash_table2[hash_value3].from_node != probeInput->to_node) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
-//            count++;
-//        }
-//    }
-
-
+    free(result1);
+    free(result2);
+    free(hash_table);
+    free(hash_table2);
+    free(hash_table3);
     return count;
 }
 
