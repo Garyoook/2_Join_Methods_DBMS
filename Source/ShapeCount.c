@@ -190,8 +190,9 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
 }
 
 void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database) {
-    // TODO: finish this function.
-    free(database);
+    SMDB *db = (SMDB *) database;
+    free(db->edges);
+    free(db);
 }
 
 typedef void *HashjoinDatabase;
