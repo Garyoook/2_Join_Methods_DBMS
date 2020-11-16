@@ -239,8 +239,6 @@ void printEdge(Edge_table *e) {
 
 HashjoinDatabase HashjoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-//    table->hash_table = (Edge_table *)malloc(sizeof(Edge) * totalNumberOfEdgesInTheEnd);
-//    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
 
     table->storage = (Edge_table **)malloc(sizeof(Edge_table *) * totalNumberOfEdgesInTheEnd);
 
@@ -281,8 +279,6 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
     int count = 0;
     int result_size = 0;
     Edge_table **result1 = (Edge_table **)malloc(sizeof(Edge_table *) * edges2_size);
-//    int result2_size = 0;
-//    Edge_table **result2 = (Edge_table **)malloc(sizeof(Edge_table *) * edges3_size);
     Edge_table hash_table[max_alloc_size + 1]; // = (Edge_table *)malloc(sizeof(Edge) * max_alloc_size);
     Edge_table hash_table2[max_alloc_size + 1];
     Edge_table hash_table3[max_alloc_size + 1];
@@ -344,35 +340,9 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
             hash_value2 = nextSlot(hash_value2);
         }
         if (hash_table2[hash_value2].from_node == probeInput->to_node) {
-//            *(result2 + (result2_size++)) = probeInput;
             count++;
         }
     }
-
-//    // build phase from edges3 to edges1:
-//    for (int i = 0; i < edges1_size; i++) {
-//        Edge_table *probeInput = edges1[i];
-//        // build for 2nd hash table:
-//        int hash_value3 = hash_mod(probeInput->from_node);
-//        while(hash_table3[hash_value3].label_edge != -1) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        hash_table3[hash_value3] = *probeInput;
-//    }
-//
-//    // 3rd probe phase:
-//    for (int j = 0; j < result2_size; j++) {
-//        Edge_table *probeInput = result2[j];
-//        int hash_value3 = hash_mod(probeInput->to_node);
-//
-//        while(hash_table3[hash_value3].label_edge !=  -1 &&
-//              hash_table2[hash_value3].from_node != probeInput->to_node) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
-//            count++;
-//        }
-//    }
 
     free(result1);
 
@@ -438,9 +408,6 @@ typedef void *CompetitionDatabase;
 
 CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-//    table->hash_table = (Edge_table *)malloc(sizeof(Edge) * totalNumberOfEdgesInTheEnd);
-//    memset(table->hash_table, -1, sizeof(int) * totalNumberOfEdgesInTheEnd);
-
     table->storage = (Edge_table **)malloc(sizeof(Edge_table *) * totalNumberOfEdgesInTheEnd);
 
     table->size = 0;
