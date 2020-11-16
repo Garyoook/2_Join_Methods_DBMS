@@ -99,6 +99,41 @@ void printDB(struct SMDB *db)
 
     }
 }
+void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
+                             int edgeLabel)
+{
+    //search the position of the given edge
+    SMDB *db = (SMDB *) database;
+    int n = db->size;
+    Edge_table **edges = db->edges;
+    int i;
+    for (i = 0; i < n; i ++){
+        Edge_table *cur = edges[i];
+        if (cur->label_edge == edgeLabel && cur->to_node == toNodeID && cur->from_node == fromNodeID){
+            break;
+        }
+    }
+    //delete the element
+    if (i < n)
+    {
+        n = n - 1;
+        for (int j=i; j<n; j++)
+            edges[j] = edges[j+1];
+    }
+    db->edges = edges;
+    db->size--;
+}
+
+void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database)
+{
+    SMDB *db = (SMDB *) database;
+    int n = db->size;
+    for (int i = 0; i < n; i++){
+        free(db->edges[i]);
+    }
+    free(db->edges);
+    free(db);
+}
 
 int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int edgeLabel2,
                           int edgeLabel3)
@@ -126,7 +161,13 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     SMDB *first_result = connectEdges(first_edges, second_edges,second_edges->size);
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
     SMDB *second_result = connectEdges(first_result,third_edges,first_result->max_size);
-    return second_result->max_size;
+    int res  = second_result->max_size;
+    free(first_edges);
+    free(second_edges);
+    free(third_edges);
+    free(first_result);
+    free(second_result);
+    return res;
 }
 
 struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max)
@@ -166,41 +207,7 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int m
     return db;
 }
 
-void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
-                             int edgeLabel)
-{
-    //search the position of the given edge
-    SMDB *db = (SMDB *) database;
-    int n = db->size;
-    Edge_table **edges = db->edges;
-    int i;
-    for (i = 0; i < n; i ++){
-        Edge_table *cur = edges[i];
-        if (cur->label_edge == edgeLabel && cur->to_node == toNodeID && cur->from_node == fromNodeID){
-            break;
-        }
-    }
-    //delete the element
-    if (i < n)
-    {
-        n = n - 1;
-        for (int j=i; j<n; j++)
-            edges[j] = edges[j+1];
-    }
-    db->edges = edges;
-    db->size--;
-}
 
-void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database)
-{
-    SMDB *db = (SMDB *) database;
-    int n = db->size;
-    for (int i = 0; i < n; i++){
-        free(db->edges[i]);
-    }
-    free(db->edges);
-    free(db);
-}
 /*----------------------------------------------HASH JOIN ----------------------------------------------------------*/
 typedef void *HashjoinDatabase;
 

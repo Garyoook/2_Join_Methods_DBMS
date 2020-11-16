@@ -1,5 +1,41 @@
 1. Interpretation of Sort Merge Join
+   The Sort merge join containing the following steps.
+
+   First, the edges from the given database are classified into
+   three groups according to their labels. The groups of edges are stored as three new database.
+
+   Then, we iterates every edges in the first group and second group to store the edges from second group that satisfy
+   firstEdge.to = secondEdge.from into a new database. The process is achieved in the
+   *connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max) function. We firstly sorted the left edges
+   by 'to' values and the second edges by 'from' values in ascending order . We implemented our own quick sort
+   function, which can be check at quickSort(Edge_table **arr, int low, int high,int attribute). Because the join
+   attributes are not unique here, we looped every left edges that has a 'to' value that equals the 'from' value of
+   current right edges.
+
+   We store the count of matches in the max_size of the new result database, and also the edges of matching from
+   the second edges group. We repeated the above step with the previous result and the third edges group to
+   get the new database. The final result will be the max_size of the database.
+
 
 2. Interpretation of Hash Join
 
 3. Analyse the performance
+
+------------------------------------------------------------------------------------------------------
+Benchmark                                                            Time             CPU   Iterations
+------------------------------------------------------------------------------------------------------
+GraphQueryBenchmark<HashjoinImplementation>/64/32               265184 ns       263796 ns         2816
+GraphQueryBenchmark<HashjoinImplementation>/128/32              898149 ns       894980 ns          767
+GraphQueryBenchmark<HashjoinImplementation>/256/32             3279742 ns      3269627 ns          215
+GraphQueryBenchmark<HashjoinImplementation>/512/32            12359233 ns     12341278 ns           55
+GraphQueryBenchmark<HashjoinImplementation>/1024/32           48846264 ns     48778040 ns           14
+GraphQueryBenchmark<HashjoinImplementation>/2048/32          194111617 ns    193586851 ns            4
+GraphQueryBenchmark<SortMergeJoinImplementation>/64/32          224993 ns       223748 ns         3126
+GraphQueryBenchmark<SortMergeJoinImplementation>/128/32         706610 ns       705683 ns          983
+GraphQueryBenchmark<SortMergeJoinImplementation>/256/32        2630835 ns      2626714 ns          271
+GraphQueryBenchmark<SortMergeJoinImplementation>/512/32       10665703 ns     10606801 ns           69
+GraphQueryBenchmark<SortMergeJoinImplementation>/1024/32      42329291 ns     42288111 ns           17
+GraphQueryBenchmark<SortMergeJoinImplementation>/2048/32     163205649 ns    163078988 ns            5
+
+
+Generally speaking, merge joins are faster and uses less memory than hash joins.
