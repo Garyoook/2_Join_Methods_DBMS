@@ -248,104 +248,104 @@ void HashjoinInsertEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
 }
 
 int HashJoin(Edge_sp **edges1, int edges1_size, Edge_sp **edges2, int edges2_size, Edge_sp **edges3, int edges3_size, unsigned long max_alloc_size) {
-//    int count = 0;
-//    int result_size = 0;
-//    Edge_sp **result1 = (Edge_sp **)malloc(sizeof(Edge_sp*) * edges2_size);
-//    int result2_size = 0;
+    int count = 0;
+    int result_size = 0;
+    Edge_sp **result1 = (Edge_sp **)malloc(sizeof(Edge_sp*) * edges2_size);
+    int result2_size = 0;
 //    Edge_sp **result2 = (Edge_sp **)malloc(sizeof(Edge_sp*) * edges3_size);
-//    Edge_sp hash_table[max_alloc_size + 1]; // = (Edge_sp *)malloc(sizeof(Edge_sp) * max_alloc_size);
-//    Edge_sp hash_table2[max_alloc_size + 1];
-//    Edge_sp hash_table3[max_alloc_size + 1];
-//
-//    for (int i = 0; i < max_alloc_size + 1; i++) {
-//        (hash_table + i)->label_edge = -1;
-//        (hash_table + i)->from_node = -1;
-//        (hash_table + i)->to_node = -1;
-//        (hash_table2 + i)->label_edge = -1;
-//        (hash_table2 + i)->from_node = -1;
-//        (hash_table2 + i)->to_node = -1;
-//        (hash_table3 + i)->label_edge = -1;
-//        (hash_table3 + i)->from_node = -1;
-//        (hash_table3 + i)->to_node = -1;
-//    }
-//
-//    // build phase:
-//    for (int i = 0; i < edges1_size; i++) {
-//        Edge_sp *buildInput = edges1[i];
-//        int hash_value = hash_mod(buildInput->to_node);
-//        while (hash_table[hash_value].label_edge != -1) {
-//            hash_value = nextSlot(hash_value);
-//        }
-//        hash_table[hash_value] = *buildInput;
-//    }
-//
-//    // probe phase:
-//    for(int i = 0; i < edges2_size; i++) {
-//        Edge_sp *probeInput = edges2[i];
-//        int hash_value = hash_mod(probeInput->from_node);
-//
-//        while(hash_table[hash_value].label_edge !=  -1 &&
-//              hash_table[hash_value].to_node != probeInput->from_node) {
-//            hash_value = nextSlot(hash_value);
-//        }
-//        if (hash_table[hash_value].to_node == probeInput->from_node) {
-//            *(result1 + (result_size++)) = probeInput;
-//        }
-//    }
-//
-//    // build phase for edges3:
-//    for (int i = 0; i < edges3_size; i++) {
-//        Edge_sp *probeInput = edges3[i];
-//        // build for 2nd hash table:
-//        int hash_value2 = hash_mod(probeInput->from_node);
-//        while(hash_table2[hash_value2].label_edge != -1) {
-//            hash_value2 = nextSlot(hash_value2);
-//        }
-//        hash_table2[hash_value2] = *probeInput;
-//    }
-//
-//    // second probe phase:
-//    for (int j = 0; j < result_size; j++) {
-//        Edge_sp *probeInput = result1[j];
-//        int hash_value2 = hash_mod(probeInput->to_node);
-//
-//        while(hash_table2[hash_value2].label_edge !=  -1 &&
-//              hash_table2[hash_value2].from_node != probeInput->to_node) {
-//            hash_value2 = nextSlot(hash_value2);
-//        }
-//        if (hash_table2[hash_value2].from_node == probeInput->to_node) {
+    Edge_sp hash_table[max_alloc_size + 1]; // = (Edge_sp *)malloc(sizeof(Edge_sp) * max_alloc_size);
+    Edge_sp hash_table2[max_alloc_size + 1];
+    Edge_sp hash_table3[max_alloc_size + 1];
+
+    for (int i = 0; i < max_alloc_size + 1; i++) {
+        (hash_table + i)->label_edge = -1;
+        (hash_table + i)->from_node = -1;
+        (hash_table + i)->to_node = -1;
+        (hash_table2 + i)->label_edge = -1;
+        (hash_table2 + i)->from_node = -1;
+        (hash_table2 + i)->to_node = -1;
+        (hash_table3 + i)->label_edge = -1;
+        (hash_table3 + i)->from_node = -1;
+        (hash_table3 + i)->to_node = -1;
+    }
+
+    // build phase:
+    for (int i = 0; i < edges1_size; i++) {
+        Edge_sp *buildInput = edges1[i];
+        int hash_value = hash_mod(buildInput->to_node);
+        while (hash_table[hash_value].label_edge != -1) {
+            hash_value = nextSlot(hash_value);
+        }
+        hash_table[hash_value] = *buildInput;
+    }
+
+    // probe phase:
+    for(int i = 0; i < edges2_size; i++) {
+        Edge_sp *probeInput = edges2[i];
+        int hash_value = hash_mod(probeInput->from_node);
+
+        while(hash_table[hash_value].label_edge !=  -1 &&
+              hash_table[hash_value].to_node != probeInput->from_node) {
+            hash_value = nextSlot(hash_value);
+        }
+        if (hash_table[hash_value].to_node == probeInput->from_node) {
+            *(result1 + (result_size++)) = probeInput;
+        }
+    }
+
+    // build phase for edges3:
+    for (int i = 0; i < edges3_size; i++) {
+        Edge_sp *probeInput = edges3[i];
+        // build for 2nd hash table:
+        int hash_value2 = hash_mod(probeInput->from_node);
+        while(hash_table2[hash_value2].label_edge != -1) {
+            hash_value2 = nextSlot(hash_value2);
+        }
+        hash_table2[hash_value2] = *probeInput;
+    }
+
+    // second probe phase:
+    for (int j = 0; j < result_size; j++) {
+        Edge_sp *probeInput = result1[j];
+        int hash_value2 = hash_mod(probeInput->to_node);
+
+        while(hash_table2[hash_value2].label_edge !=  -1 &&
+              hash_table2[hash_value2].from_node != probeInput->to_node) {
+            hash_value2 = nextSlot(hash_value2);
+        }
+        if (hash_table2[hash_value2].from_node == probeInput->to_node) {
 //            *(result2 + (result2_size++)) = probeInput;
+            count++;
+        }
+    }
+
+//    // build phase from edges3 to edges1:
+//    for (int i = 0; i < edges1_size; i++) {
+//        Edge_sp *probeInput = edges1[i];
+//        // build for 2nd hash table:
+//        int hash_value3 = hash_mod(probeInput->from_node);
+//        while(hash_table3[hash_value3].label_edge != -1) {
+//            hash_value3 = nextSlot(hash_value3);
+//        }
+//        hash_table3[hash_value3] = *probeInput;
+//    }
+//
+//    // 3rd probe phase:
+//    for (int j = 0; j < result2_size; j++) {
+//        Edge_sp *probeInput = result2[j];
+//        int hash_value3 = hash_mod(probeInput->to_node);
+//
+//        while(hash_table3[hash_value3].label_edge !=  -1 &&
+//              hash_table2[hash_value3].from_node != probeInput->to_node) {
+//            hash_value3 = nextSlot(hash_value3);
+//        }
+//        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
 //            count++;
 //        }
 //    }
-//
-////    // build phase from edges3 to edges1:
-////    for (int i = 0; i < edges1_size; i++) {
-////        Edge_sp *probeInput = edges1[i];
-////        // build for 2nd hash table:
-////        int hash_value3 = hash_mod(probeInput->from_node);
-////        while(hash_table3[hash_value3].label_edge != -1) {
-////            hash_value3 = nextSlot(hash_value3);
-////        }
-////        hash_table3[hash_value3] = *probeInput;
-////    }
-////
-////    // 3rd probe phase:
-////    for (int j = 0; j < result2_size; j++) {
-////        Edge_sp *probeInput = result2[j];
-////        int hash_value3 = hash_mod(probeInput->to_node);
-////
-////        while(hash_table3[hash_value3].label_edge !=  -1 &&
-////              hash_table2[hash_value3].from_node != probeInput->to_node) {
-////            hash_value3 = nextSlot(hash_value3);
-////        }
-////        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
-////            count++;
-////        }
-////    }
 
 
-    return 0;
+    return count;
 }
 
 int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, int edgeLabel3) {
