@@ -194,6 +194,10 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
 void SortMergeJoinDeleteDatabase(SortMergeJoinDatabase database)
 {
     SMDB *db = (SMDB *) database;
+    int n = db->size;
+    for (int i = 0; i < n; i++){
+        free(db->edges[i]);
+    }
     free(db->edges);
     free(db);
 }

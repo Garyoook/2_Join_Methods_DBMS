@@ -1,0 +1,5 @@
+1. Interpretation of Sort Merge Join
+
+2. Interpretation of Hash Join
+
+3. Analyse the performance
