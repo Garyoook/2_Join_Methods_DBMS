@@ -16,6 +16,11 @@
    the second edges group. We repeat the above step with the previous result and the third edge group to get the new
    database. The final result will be the max_size of the database.
 
+   There are two new struc created for the sort merge join. One is struct Edge_tuple. It has three attributes: label_edge,
+   from_node and to_node. It is also used in Hash join. The other one is called struc SMDB, which stand for "Sort merge
+   database". It records the all the edges inserted in the database, which is stored as an array of struct Edge_tuple in
+   edges attributes. Another two attributes are size and max_size which are actual size of edges and the totalNumberOfEdgesInTheEnd.
+   The max_size is also used to record the count of matching in the merge process, as mentioned before.
 
 2. Interpretation of Hash Join
     We use the struct Edge_tuple above and a struct HashJoinTable for the Hash join method. HashJoinTable contains
@@ -46,22 +51,22 @@
 ------------------------------------------------------------------------------------------------------
 Benchmark                                                            Time             CPU   Iterations
 ------------------------------------------------------------------------------------------------------
-GraphQueryBenchmark<HashjoinImplementation>/64/32               265184 ns       263796 ns         2816
-GraphQueryBenchmark<HashjoinImplementation>/128/32              898149 ns       894980 ns          767
-GraphQueryBenchmark<HashjoinImplementation>/256/32             3279742 ns      3269627 ns          215
-GraphQueryBenchmark<HashjoinImplementation>/512/32            12359233 ns     12341278 ns           55
-GraphQueryBenchmark<HashjoinImplementation>/1024/32           48846264 ns     48778040 ns           14
-GraphQueryBenchmark<HashjoinImplementation>/2048/32          194111617 ns    193586851 ns            4
-GraphQueryBenchmark<SortMergeJoinImplementation>/64/32          224993 ns       223748 ns         3126
-GraphQueryBenchmark<SortMergeJoinImplementation>/128/32         706610 ns       705683 ns          983
-GraphQueryBenchmark<SortMergeJoinImplementation>/256/32        2630835 ns      2626714 ns          271
-GraphQueryBenchmark<SortMergeJoinImplementation>/512/32       10665703 ns     10606801 ns           69
-GraphQueryBenchmark<SortMergeJoinImplementation>/1024/32      42329291 ns     42288111 ns           17
-GraphQueryBenchmark<SortMergeJoinImplementation>/2048/32     163205649 ns    163078988 ns            5
+GraphQueryBenchmark<HashjoinImplementation>/64/32               271170 ns       270566 ns         2582
+GraphQueryBenchmark<HashjoinImplementation>/128/32              903044 ns       900719 ns          756
+GraphQueryBenchmark<HashjoinImplementation>/256/32             3395734 ns      3356182 ns          212
+GraphQueryBenchmark<HashjoinImplementation>/512/32            13215616 ns     13075536 ns           54
+GraphQueryBenchmark<HashjoinImplementation>/1024/32           51766439 ns     51632894 ns           13
+GraphQueryBenchmark<HashjoinImplementation>/2048/32          204633778 ns    204072275 ns            3
+GraphQueryBenchmark<SortMergeJoinImplementation>/64/32          204025 ns       202698 ns         3497
+GraphQueryBenchmark<SortMergeJoinImplementation>/128/32         661341 ns       657238 ns          998
+GraphQueryBenchmark<SortMergeJoinImplementation>/256/32        2183323 ns      2168346 ns          330
+GraphQueryBenchmark<SortMergeJoinImplementation>/512/32        8206694 ns      8175023 ns           86
+GraphQueryBenchmark<SortMergeJoinImplementation>/1024/32      33129356 ns     32864105 ns           21
+GraphQueryBenchmark<SortMergeJoinImplementation>/2048/32     129867919 ns    129006856 ns            5
 
 
 Generally speaking,sort merge joins are faster and uses less memory than hash joins. The sort join has a complexity of
 O(n^2) + O(m^2) + O(m*n) in the worst case, where n is the size of the left relation and m is the size of the right
-relation. The previous O(n^2) + O(m^2) are the complexity of the quick sort process and the O(m+n) is the merge
-process. Because the index increases once the matching is found, every tuples in the right relation only go through once.
+relation. The previous O(n^2) + O(m^2) are the complexity of the quick sort process and the O(m*n) is the merge
+process. Because the index increases once the matching is found, every tuple in the right relation only goes through once.
 In the worst case, every tuples in the right relation goes through the whole left relation. Hence,O(m+n) in the worst case.
