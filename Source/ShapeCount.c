@@ -43,7 +43,6 @@ void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int
     edge->label_edge = edgeLabel;
     SMDB *db = (SMDB *) database;
     InsertEdge(edge, db);
-    free(edge);
 }
 
 void InsertEdge(Edge_table *edge, SMDB *db) { *(db->edges + db->size++) = edge; }
