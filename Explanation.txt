@@ -1,26 +1,11 @@
 1. Interpretation of Sort Merge Join
-   The Sort merge join contains the following steps.
+   First, the edges from the given database are classified into three groups according to their labels. The groups of edges are stored as three new databases.
 
-   First, the edges from the given database are classified into
-   three groups according to their labels. The groups of edges are stored as three new databases.
+   Then, we iterate every edge in the first group and the second group to store the edges from the second group that satisfy firstEdge.to = secondEdge.from into a new database. The process is achieved in the *connectEdges function. We firstly sort the left edges by 'to' values and the second edges by 'from' values in ascending order. We implement our own quick sort function, which can be check at quickSort. Because the join attributes are not unique here, we loop every left edge that has a 'to' value that equals the 'from' value of current right edges.
 
-   Then, we iterate every edges in the first group and second group to store the edges from second group that satisfy
-   firstEdge.to = secondEdge.from into a new database. The process is achieved in the
-   *connectEdges(const SMDB *first_edges, const SMDB *second_edges) function. We firstly sort the left edges
-   by 'to' values and the second edges by 'from' values in ascending order. We implement our own quick sort
-   function, which can be check at quickSort(Edge_table **arr, int low, int high, int attribute). Because the join
-   attributes are not unique here, we loop every left edges that has a 'to' value that equals the 'from' value of
-   current right edges.
+   We store the count of matching in the max_size of the new result database, and also the edges of matching from the second edges group. We repeat the above step with the previous result and the third edge group to get the new database. The final result will be the max_size of the database.
 
-   We store the count of matches in the max_size of the new result database, and also the edges of matching from
-   the second edges group. We repeat the above step with the previous result and the third edge group to get the new
-   database. The final result will be the max_size of the database.
 
-   There are two new struc created for the sort merge join. One is struct Edge_tuple. It has three attributes: label_edge,
-   from_node and to_node. It is also used in Hash join. The other one is called struc SMDB, which stand for "Sort merge
-   database". It records the all the edges inserted in the database, which is stored as an array of struct Edge_tuple in
-   edges attributes. Another two attributes are size and max_size which are actual size of edges and the totalNumberOfEdgesInTheEnd.
-   The max_size is also used to record the count of matching in the merge process, as mentioned before.
 
 2. Interpretation of Hash Join
 
