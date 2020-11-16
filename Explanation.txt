@@ -18,6 +18,28 @@
 
 
 2. Interpretation of Hash Join
+    We use the struct Edge_tuple above and a struct HashJoinTable for the Hash join method. HashJoinTable contains
+    a list of Edge_tuple called 'edges', a int for its size, and a unsigned long for its maximum allocation size.
+    In the allocation stage, the list of Edge is allocated together with the HashJoinDatabase itself.
+
+    At the insertion stage, an Edge_tuple is allocated and assigned with the attributes values input.
+    At the edge delete stage, the target edge in 'edges' for deletion is marked as deleted, but it still occupies
+    memory space, and this part of memory will be freed when the whole dataset is deleted.
+
+    When we run the query, we allocate 3 empty array of Edge_tuple, for storing tuples with 3 target labels.
+    and the size of these 3 arrays are all remembered respectively. Then they are passed into a function 'HashJoin()'
+    for the actual Hash join process: first the hash tables of Edge_tuples are initialised with all attributes
+    valued -1.
+    In the first build phase, the 'to_node' attributes of the first group of edges are hashed using the mod
+    hasing method, and the current tuple is stored in the hash table with index of the hash value. The hash value
+    calculated is based on slots with a function 'nextSlot' to execute same hash value occurrence.
+    Then we probe the build result by edges in the second group by matching the hash values of edges, and build a
+    result list of edges with the edges matched.
+    Then based on the matching result of previous step, we can build anther hash table of 'from_node' of third group
+    of edges and used the 'to_node' of the result edges of previous result set, hence we can have the linked edges
+    from the first group to the third group. Finally, we check the remaining edges' 'to_node' with the 'from_node'
+    attribute of edges in the first group to finally settle down the triangles. Finally, the counts of the number of
+    triangles are returned.
 
 3. Analyse the performance
 

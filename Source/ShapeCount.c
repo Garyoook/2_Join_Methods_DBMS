@@ -5,13 +5,13 @@
 #define FROM 0
 #define TO 1
 
-typedef struct Edge_table{
+typedef struct Edge_tuple{
     int label_edge, from_node, to_node;
-} Edge_table;
+} Edge_tuple;
 
 /*-------------------------------------SORT MERGE JOIN---------------------------------------------------------------*/
 typedef struct SMDB{
-    Edge_table **edges;
+    Edge_tuple **edges;
     int size;
     int max_size;
 } SMDB;
@@ -22,12 +22,12 @@ void printDB(struct SMDB *db);
 
 SMDB *connectEdges(const SMDB *first_edges, const SMDB *second_edges);
 
-void InsertEdge(Edge_table *edge, SMDB *db);
+void InsertEdge(Edge_tuple *edge, SMDB *db);
 
 SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd)
 {
     struct SMDB *db = (struct SMDB *) malloc(sizeof(struct SMDB));
-    db->edges = (Edge_table **) malloc(sizeof(Edge_table*) * totalNumberOfEdgesInTheEnd);
+    db->edges = (Edge_tuple **) malloc(sizeof(Edge_tuple*) * totalNumberOfEdgesInTheEnd);
     db->size = 0;
     db->max_size = (int) totalNumberOfEdgesInTheEnd;
     return db;
@@ -36,28 +36,27 @@ SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfE
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
                              int edgeLabel)
 {
-    Edge_table *edge = (Edge_table *) malloc(sizeof(Edge_table));
+    Edge_tuple *edge = (Edge_tuple *) malloc(sizeof(Edge_tuple));
     edge->from_node = fromNodeID;
     edge->to_node = toNodeID;
     edge->label_edge = edgeLabel;
     SMDB *db = (SMDB *) database;
-//    db->edges[db->size++] = edge;
     InsertEdge(edge, db);
 }
 
-void InsertEdge(Edge_table *edge, SMDB *db) { *(db->edges + db->size++) = edge; }
+void InsertEdge(Edge_tuple *edge, SMDB *db) { *(db->edges + db->size++) = edge; }
 
-void swap(Edge_table** a, Edge_table** b)
+void swap(Edge_tuple** a, Edge_tuple** b)
 {
-    Edge_table* t = *a;
+    Edge_tuple* t = *a;
     *a = *b;
     *b = t;
 }
 
 
-int partition (Edge_table **arr, int low, int high, int attribute)
+int partition (Edge_tuple **arr, int low, int high, int attribute)
 { //from 0, to 1;
-    Edge_table *pivot = arr[high];
+    Edge_tuple *pivot = arr[high];
     int i = (low - 1);
     for (int j = low; j <= high- 1; j++)
     {
@@ -80,7 +79,7 @@ int partition (Edge_table **arr, int low, int high, int attribute)
     return (i + 1);
 }
 
-void quickSort(Edge_table **arr, int low, int high,int attribute)
+void quickSort(Edge_tuple **arr, int low, int high, int attribute)
 {
     if (low < high)
     {
@@ -93,7 +92,7 @@ void quickSort(Edge_table **arr, int low, int high,int attribute)
 void printDB(struct SMDB *db)
 {
     int n = db->size;
-    Edge_table **edges = db->edges;
+    Edge_tuple **edges = db->edges;
     for(int i = 0; i < n; i++){
         printf("from:%d, to:%d, Label:%d\n",edges[i]->from_node,edges[i]->to_node,edges[i]->label_edge);
 
@@ -105,10 +104,10 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
     //search the position of the given edge
     SMDB *db = (SMDB *) database;
     int n = db->size;
-    Edge_table **edges = db->edges;
+    Edge_tuple **edges = db->edges;
     int i;
     for (i = 0; i < n; i ++){
-        Edge_table *cur = edges[i];
+        Edge_tuple *cur = edges[i];
         if (cur->label_edge == edgeLabel && cur->to_node == toNodeID && cur->from_node == fromNodeID){
             free(db->edges[i]);
             break;
@@ -141,7 +140,7 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
 {
     SMDB *db = (SMDB *) database;
     int n = db->size;
-    Edge_table **edges = db->edges;
+    Edge_tuple **edges = db->edges;
     //classify edges according to their label
     SMDB *first_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
     SMDB *second_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
@@ -196,10 +195,10 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
     int leftsize = first_edges->size;
     int rightsize = second_edges->size;
     int resultsize = 0;
-    Edge_table **leftEdges = first_edges->edges;
-    Edge_table **rightEdges = second_edges->edges;
+    Edge_tuple **leftEdges = first_edges->edges;
+    Edge_tuple **rightEdges = second_edges->edges;
     SMDB *db = (SMDB *) SortMergeJoinAllocateDatabase(rightsize);
-    Edge_table **result = db->edges;
+    Edge_tuple **result = db->edges;
     int count = 0;
     while (lefti < leftsize && righti < rightsize){
         if (leftEdges[lefti]->to_node < rightEdges[righti]->from_node){
@@ -228,19 +227,19 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
 typedef void *HashjoinDatabase;
 
 typedef struct HashJoinTable {
-    Edge_table **storage;
+    Edge_tuple **edges;
     int size;
     unsigned long max_alloc_size;
 } HashJoinTable;
 
-void printEdge(Edge_table *e) {
+void printEdge(Edge_tuple *e) {
     printf("from: %d, to: %d, label: %d\n", e->from_node, e->to_node, e->label_edge);
 }
 
 HashjoinDatabase HashjoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
 
-    table->storage = (Edge_table **)malloc(sizeof(Edge_table *) * totalNumberOfEdgesInTheEnd);
+    table->edges = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * totalNumberOfEdgesInTheEnd);
 
     table->size = 0;
     table->max_alloc_size = totalNumberOfEdgesInTheEnd;
@@ -267,21 +266,23 @@ void HashjoinInsertEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
         printf("Exceeds maximum size limit!\n");
         return;
     }
-    Edge_table *edge = (Edge_table *) malloc(sizeof(Edge_table));
+    Edge_tuple *edge = (Edge_tuple *) malloc(sizeof(Edge_tuple));
     edge->label_edge = edgeLabel;
     edge->from_node = fromNodeID;
     edge->to_node = toNodeID;
-    db->storage[db->size] = edge;
+    db->edges[db->size] = edge;
     db->size += 1;
 }
 
-int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edges2_size, Edge_table **edges3, int edges3_size, unsigned long max_alloc_size) {
+int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edges2_size, Edge_tuple **edges3, int edges3_size, unsigned long max_alloc_size) {
     int count = 0;
     int result_size = 0;
-    Edge_table **result1 = (Edge_table **)malloc(sizeof(Edge_table *) * edges2_size);
-    Edge_table hash_table[max_alloc_size + 1]; // = (Edge_table *)malloc(sizeof(Edge) * max_alloc_size);
-    Edge_table hash_table2[max_alloc_size + 1];
-    Edge_table hash_table3[max_alloc_size + 1];
+    int result2_size = 0;
+    Edge_tuple **result1 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges2_size);
+    Edge_tuple **result2 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges3_size);
+    Edge_tuple hash_table[max_alloc_size + 1]; // = (Edge_table *)malloc(sizeof(Edge) * max_alloc_size);
+    Edge_tuple hash_table2[max_alloc_size + 1];
+    Edge_tuple hash_table3[max_alloc_size + 1];
 
     for (int i = 0; i < max_alloc_size + 1; i++) {
         (hash_table + i)->label_edge = -1;
@@ -297,7 +298,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 
     // build phase:
     for (int i = 0; i < edges1_size; i++) {
-        Edge_table *buildInput = edges1[i];
+        Edge_tuple *buildInput = edges1[i];
         int hash_value = hash_mod(buildInput->to_node);
         while (hash_table[hash_value].label_edge != -1) {
             hash_value = nextSlot(hash_value);
@@ -307,7 +308,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 
     // probe phase:
     for(int i = 0; i < edges2_size; i++) {
-        Edge_table *probeInput = edges2[i];
+        Edge_tuple *probeInput = edges2[i];
         int hash_value = hash_mod(probeInput->from_node);
 
         while(hash_table[hash_value].label_edge !=  -1 &&
@@ -321,7 +322,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 
     // build phase for edges3:
     for (int i = 0; i < edges3_size; i++) {
-        Edge_table *probeInput = edges3[i];
+        Edge_tuple *probeInput = edges3[i];
         // build for 2nd hash table:
         int hash_value2 = hash_mod(probeInput->from_node);
         while(hash_table2[hash_value2].label_edge != -1) {
@@ -332,7 +333,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 
     // second probe phase:
     for (int j = 0; j < result_size; j++) {
-        Edge_table *probeInput = result1[j];
+        Edge_tuple *probeInput = result1[j];
         int hash_value2 = hash_mod(probeInput->to_node);
 
         while(hash_table2[hash_value2].label_edge !=  -1 &&
@@ -340,11 +341,39 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
             hash_value2 = nextSlot(hash_value2);
         }
         if (hash_table2[hash_value2].from_node == probeInput->to_node) {
-            count++;
+//            count++;
+            *(result2 + (result2_size++)) = probeInput;
         }
     }
 
     free(result1);
+
+        // build phase from edges3 to edges1:
+    for (int i = 0; i < edges1_size; i++) {
+        Edge_tuple *probeInput = edges1[i];
+        // build for 2nd hash table:
+        int hash_value3 = hash_mod(probeInput->from_node);
+        while(hash_table3[hash_value3].label_edge != -1) {
+            hash_value3 = nextSlot(hash_value3);
+        }
+        hash_table3[hash_value3] = *probeInput;
+    }
+
+    // 3rd probe phase:
+    for (int j = 0; j < result2_size; j++) {
+        Edge_tuple *probeInput = result2[j];
+        int hash_value3 = hash_mod(probeInput->to_node);
+
+        while(hash_table3[hash_value3].label_edge !=  -1 &&
+              hash_table2[hash_value3].from_node != probeInput->to_node) {
+            hash_value3 = nextSlot(hash_value3);
+        }
+        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
+            count++;
+        }
+    }
+
+    free(result2);
 
     return count;
 }
@@ -352,23 +381,23 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, int edgeLabel3) {
     HashJoinTable *db = (HashJoinTable *) database;
 
-    Edge_table **db_label1 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label2 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label3 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
+    Edge_tuple **db_label1 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
+    Edge_tuple **db_label2 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
+    Edge_tuple **db_label3 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
     int size1 = 0, size2 = 0, size3 = 0;
 
 
     for (int i = 0; i < db->size; i++) {
-        if (db->storage[i]->label_edge == edgeLabel1) {
-            *(db_label1 + size1) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel1) {
+            *(db_label1 + size1) = db->edges[i];
             size1++;
         }
-        if (db->storage[i]->label_edge == edgeLabel2) {
-            *(db_label2 + size2) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel2) {
+            *(db_label2 + size2) = db->edges[i];
             size2++;
         }
-        if (db->storage[i]->label_edge == edgeLabel3) {
-            *(db_label3 + size3) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel3) {
+            *(db_label3 + size3) = db->edges[i];
             size3++;
         }
     }
@@ -385,12 +414,12 @@ int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, 
 void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID, int edgeLabel) {
     HashJoinTable *db = (HashJoinTable *) database;
     for(int i = 0; i < db->size; i++) {
-        if(db->storage[i]->label_edge == edgeLabel
-           && db->storage[i]->from_node == fromNodeID
-           && db->storage[i]->to_node == toNodeID) {
-            db->storage[i]->label_edge = -1;
-            db->storage[i]->from_node = -1;
-            db->storage[i]->to_node = -1;
+        if(db->edges[i]->label_edge == edgeLabel
+           && db->edges[i]->from_node == fromNodeID
+           && db->edges[i]->to_node == toNodeID) {
+            db->edges[i]->label_edge = -1;
+            db->edges[i]->from_node = -1;
+            db->edges[i]->to_node = -1;
         }
     }
 }
@@ -398,9 +427,9 @@ void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
 void HashjoinDeleteDatabase(HashjoinDatabase database) {
     HashJoinTable *db = (HashJoinTable *) database;
     for (int i = 0; i < db->size; ++i) {
-        free(db->storage[i]);
+        free(db->edges[i]);
     }
-    free(db->storage);
+    free(db->edges);
     free(db);
 }
 
@@ -408,7 +437,7 @@ typedef void *CompetitionDatabase;
 
 CompetitionDatabase CompetitionAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd) {
     HashJoinTable *table = (HashJoinTable *)malloc(sizeof(HashJoinTable));
-    table->storage = (Edge_table **)malloc(sizeof(Edge_table *) * totalNumberOfEdgesInTheEnd);
+    table->edges = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * totalNumberOfEdgesInTheEnd);
 
     table->size = 0;
     table->max_alloc_size = totalNumberOfEdgesInTheEnd;
@@ -422,34 +451,34 @@ void CompetitionInsertEdge(CompetitionDatabase database, int fromNodeID, int toN
         printf("Exceeds maximum size limit!\n");
         return;
     }
-    Edge_table *edge = (Edge_table *) malloc(sizeof(Edge_table));
+    Edge_tuple *edge = (Edge_tuple *) malloc(sizeof(Edge_tuple));
     edge->label_edge = edgeLabel;
     edge->from_node = fromNodeID;
     edge->to_node = toNodeID;
-    db->storage[db->size] = edge;
+    db->edges[db->size] = edge;
     db->size += 1;
 }
 
 int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLabel2, int edgeLabel3) {
     HashJoinTable *db = (HashJoinTable *) database;
 
-    Edge_table **db_label1 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label2 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
-    Edge_table **db_label3 = (Edge_table **)malloc(sizeof(Edge_table *) * db->size);
+    Edge_tuple **db_label1 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
+    Edge_tuple **db_label2 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
+    Edge_tuple **db_label3 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * db->size);
     int size1 = 0, size2 = 0, size3 = 0;
 
 
     for (int i = 0; i < db->size; i++) {
-        if (db->storage[i]->label_edge == edgeLabel1) {
-            *(db_label1 + size1) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel1) {
+            *(db_label1 + size1) = db->edges[i];
             size1++;
         }
-        if (db->storage[i]->label_edge == edgeLabel2) {
-            *(db_label2 + size2) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel2) {
+            *(db_label2 + size2) = db->edges[i];
             size2++;
         }
-        if (db->storage[i]->label_edge == edgeLabel3) {
-            *(db_label3 + size3) = db->storage[i];
+        if (db->edges[i]->label_edge == edgeLabel3) {
+            *(db_label3 + size3) = db->edges[i];
             size3++;
         }
     }
@@ -466,12 +495,12 @@ int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLa
 void CompetitionDeleteEdge(CompetitionDatabase database, int fromNodeID, int toNodeID, int edgeLabel) {
     HashJoinTable *db = (HashJoinTable *) database;
     for(int i = 0; i < db->size; i++) {
-        if(db->storage[i]->label_edge == edgeLabel
-           && db->storage[i]->from_node == fromNodeID
-           && db->storage[i]->to_node == toNodeID) {
-            db->storage[i]->label_edge = -1;
-            db->storage[i]->from_node = -1;
-            db->storage[i]->to_node = -1;
+        if(db->edges[i]->label_edge == edgeLabel
+           && db->edges[i]->from_node == fromNodeID
+           && db->edges[i]->to_node == toNodeID) {
+            db->edges[i]->label_edge = -1;
+            db->edges[i]->from_node = -1;
+            db->edges[i]->to_node = -1;
         }
     }
 }
@@ -479,61 +508,61 @@ void CompetitionDeleteEdge(CompetitionDatabase database, int fromNodeID, int toN
 void CompetitionDeleteDatabase(CompetitionDatabase database) {
     HashJoinTable *db = (HashJoinTable *) database;
     for (int i = 0; i < db->size; ++i) {
-        free(db->storage[i]);
+        free(db->edges[i]);
     }
-    free(db->storage);
+    free(db->edges);
     free(db);
 }
 
-int amain(void) {
-//    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
-//    HashjoinInsertEdge(db, 0, 1, 0);
-//    HashjoinInsertEdge(db, 0, 2, 0);
-//    HashjoinInsertEdge(db, 0, 3, 0);
-//    HashjoinInsertEdge(db, 1, 3, 1);
-//    HashjoinInsertEdge(db, 1, 4, 1);
-//    HashjoinInsertEdge(db, 1, 2, 1);
-//    HashjoinInsertEdge(db, 3, 4, 1);
-//    HashjoinInsertEdge(db, 3, 2, 1);
-//    HashjoinInsertEdge(db, 2, 0, 2);
-//    HashjoinInsertEdge(db, 4, 0, 2);
-//    HashjoinInsertEdge(db, 3, 0, 2);
-//    HashjoinDeleteEdge(db, 1, 3, 1);
-//    HashjoinDeleteEdge(db, 3, 4, 1);
+int main(void) {
+    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
+    HashjoinInsertEdge(db, 0, 1, 0);
+    HashjoinInsertEdge(db, 0, 2, 0);
+    HashjoinInsertEdge(db, 0, 3, 0);
+    HashjoinInsertEdge(db, 1, 3, 1);
+    HashjoinInsertEdge(db, 1, 4, 1);
+    HashjoinInsertEdge(db, 1, 2, 1);
+    HashjoinInsertEdge(db, 3, 4, 1);
+    HashjoinInsertEdge(db, 3, 2, 1);
+    HashjoinInsertEdge(db, 2, 0, 2);
+    HashjoinInsertEdge(db, 4, 0, 2);
+    HashjoinInsertEdge(db, 3, 0, 2);
+    HashjoinDeleteEdge(db, 1, 3, 1);
+    HashjoinDeleteEdge(db, 3, 4, 1);
+
+//    printEdge(((HashJoinTable *) db)->storage[0]);
+    for (int i = 0; i < (db)->size; i++) {
+        Edge_tuple *a = (db)->edges[i];
+        printEdge(a);
+    }
+    int count = HashjoinRunQuery(db, 0, 1, 2);
+    printf("triangle detected: %d\n", count);
+
+    HashjoinDeleteDatabase(db);
+    return 0;
+
+
+
+//    // yifei's main:
+//    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
+//    SortMergeJoinInsertEdge(db, 0, 1, 0);
+//    SortMergeJoinInsertEdge(db, 0, 2, 0);
+//    SortMergeJoinInsertEdge(db, 0, 3, 0);
+//    SortMergeJoinInsertEdge(db, 1, 3, 1);
+//    SortMergeJoinInsertEdge(db, 1, 4, 1);
+//    SortMergeJoinInsertEdge(db, 1, 2, 1);
+//    SortMergeJoinInsertEdge(db, 3, 4, 1);
+//    SortMergeJoinInsertEdge(db, 3, 2, 1);
+//    SortMergeJoinInsertEdge(db, 2, 0, 2);
+//    SortMergeJoinInsertEdge(db, 4, 0, 2);
+//    SortMergeJoinInsertEdge(db, 3, 0, 2);
+//    SortMergeJoinDeleteEdge(db, 1, 3, 1);
+//    SortMergeJoinDeleteEdge(db, 3, 4, 1);
 //
-////    printEdge(((HashJoinTable *) db)->storage[0]);
-//    for (int i = 0; i < (db)->size; i++) {
-//        Edge_table *a = (db)->storage[i];
-//        printEdge(a);
-//    }
-//    int count = HashjoinRunQuery(db, 0, 1, 2);
-//    printf("triangle detected: %d\n", count);
+//    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
 //
-//    HashjoinDeleteDatabase(db);
-//    return 0;
-
-
-
-    // yifei's main:
-    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
-    SortMergeJoinInsertEdge(db, 0, 1, 0);
-    SortMergeJoinInsertEdge(db, 0, 2, 0);
-    SortMergeJoinInsertEdge(db, 0, 3, 0);
-    SortMergeJoinInsertEdge(db, 1, 3, 1);
-    SortMergeJoinInsertEdge(db, 1, 4, 1);
-    SortMergeJoinInsertEdge(db, 1, 2, 1);
-    SortMergeJoinInsertEdge(db, 3, 4, 1);
-    SortMergeJoinInsertEdge(db, 3, 2, 1);
-    SortMergeJoinInsertEdge(db, 2, 0, 2);
-    SortMergeJoinInsertEdge(db, 4, 0, 2);
-    SortMergeJoinInsertEdge(db, 3, 0, 2);
-    SortMergeJoinDeleteEdge(db, 1, 3, 1);
-    SortMergeJoinDeleteEdge(db, 3, 4, 1);
-
-    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
-
-    printf("AAAA, %i\n", count);
-
-    SortMergeJoinDeleteDatabase(db);
+//    printf("AAAA, %i\n", count);
+//
+//    SortMergeJoinDeleteDatabase(db);
     return 0;
 }
