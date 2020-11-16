@@ -2,13 +2,13 @@
    The Sort merge join containing the following steps.
 
    First, the edges from the given database are classified into
-   three groups according to their labels. The groups of edges are stored as three new database.
+   three groups according to their labels. The groups of edges are stored as three new databases.
 
-   Then, we iterates every edges in the first group and second group to store the edges from second group that satisfy
+   Then, we iterated every edges in the first group and second group to store the edges from second group that satisfy
    firstEdge.to = secondEdge.from into a new database. The process is achieved in the
-   *connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max) function. We firstly sorted the left edges
+   *connectEdges(const SMDB *first_edges, const SMDB *second_edges) function. We firstly sorted the left edges
    by 'to' values and the second edges by 'from' values in ascending order . We implemented our own quick sort
-   function, which can be check at quickSort(Edge_table **arr, int low, int high,int attribute). Because the join
+   function, which can be check at quickSort(Edge_table **arr, int low, int high, int attribute). Because the join
    attributes are not unique here, we looped every left edges that has a 'to' value that equals the 'from' value of
    current right edges.
 

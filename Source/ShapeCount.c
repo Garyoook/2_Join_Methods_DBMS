@@ -503,7 +503,7 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
     free(db);
 }
 
-//int main(void) {
+int main(void) {
 //    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
 //
 //
@@ -557,4 +557,4 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 ////    SortMergeJoinInsertEdge(db, 2, 0, 0);
 ////    free(db);
 //
-//}
+}
