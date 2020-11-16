@@ -422,12 +422,12 @@ void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
 }
 
 void HashjoinDeleteDatabase(HashjoinDatabase database) {
-//    HashJoinTable *db = (HashJoinTable *) database;
-//    for (int i = 0; i < db->size; ++i) {
-//        free(db->edges[i]);
-//    }
-//    free(db->edges);
-//    free(db);
+    HashJoinTable *db = (HashJoinTable *) database;
+    for (int i = 0; i < db->size; ++i) {
+        free(db->edges[i]);
+    }
+    free(db->edges);
+    free(db);
 }
 
 typedef void *CompetitionDatabase;
@@ -538,7 +538,7 @@ int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLa
     return res;
 }
 
-int amain(void) {
+int main(void) {
     HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
     HashjoinInsertEdge(db, 0, 1, 0);
     HashjoinInsertEdge(db, 0, 2, 0);
