@@ -27,11 +27,10 @@ void InsertEdge(Edge_table *edge, SMDB *db);
 SortMergeJoinDatabase SortMergeJoinAllocateDatabase(unsigned long totalNumberOfEdgesInTheEnd)
 {
     struct SMDB *db = (struct SMDB *) malloc(sizeof(struct SMDB));
-    Edge_table ** data = (Edge_table **) malloc(sizeof(Edge_table*) * totalNumberOfEdgesInTheEnd);
-    db->edges = data;
+    db->edges = (Edge_table **) malloc(sizeof(Edge_table*) * totalNumberOfEdgesInTheEnd);
     db->size = 0;
     db->max_size = (int) totalNumberOfEdgesInTheEnd;
-    return (SortMergeJoinDatabase) db;
+    return db;
 }
 
 void SortMergeJoinInsertEdge(SortMergeJoinDatabase database, int fromNodeID, int toNodeID,
@@ -110,6 +109,7 @@ void SortMergeJoinDeleteEdge(SortMergeJoinDatabase database, int fromNodeID, int
     for (i = 0; i < n; i ++){
         Edge_table *cur = edges[i];
         if (cur->label_edge == edgeLabel && cur->to_node == toNodeID && cur->from_node == fromNodeID){
+            free(db->edges[i]);
             break;
         }
     }
@@ -142,29 +142,31 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     int n = db->size;
     Edge_table **edges = db->edges;
     //classify edges according to their label
-    SMDB *first_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
-    SMDB *second_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
-    SMDB *third_edges = (SMDB *) SortMergeJoinAllocateDatabase(n);
+    SortMergeJoinDatabase *first_edges = SortMergeJoinAllocateDatabase(n);
+    SortMergeJoinDatabase *second_edges = SortMergeJoinAllocateDatabase(n);
+    SortMergeJoinDatabase *third_edges = SortMergeJoinAllocateDatabase(n);
     for (int i = 0; i < n; i++){
         if (edges[i]->label_edge == edgeLabel1){
-            InsertEdge(edges[i],first_edges);
+            InsertEdge(edges[i],(SMDB *)first_edges);
         }
         if (edges[i]->label_edge == edgeLabel2){
-            InsertEdge(edges[i],second_edges);
+            InsertEdge(edges[i],(SMDB *)second_edges);
         }
         if (edges[i]->label_edge == edgeLabel3)   {
-            InsertEdge(edges[i],third_edges);
+            InsertEdge(edges[i],(SMDB *)third_edges);
         }
     }
 
     //compare firstEdge.to = secondEdge.from and firstEdge.label = 0
-    SMDB *first_result = connectEdges(first_edges, second_edges);
+    SMDB *first_result = connectEdges((SMDB *)first_edges, (SMDB *)second_edges);
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
-    SMDB *second_result = connectEdges(first_result,third_edges);
+    SMDB *second_result = connectEdges(first_result,(SMDB *)third_edges);
     int res  = second_result->max_size;
-    free(first_edges);
-    free(second_edges);
-    free(third_edges);
+    SortMergeJoinDeleteDatabase(first_edges);
+    SortMergeJoinDeleteDatabase(second_edges);
+    SortMergeJoinDeleteDatabase(third_edges);
+    free(first_result->edges);
+    free(second_result->edges);
     free(first_result);
     free(second_result);
     return res;
@@ -212,7 +214,6 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
 typedef void *HashjoinDatabase;
 
 typedef struct HashJoinTable {
-//    Edge_sp *hash_table;
     Edge_table **storage;
     int size;
     unsigned long max_alloc_size;
@@ -329,36 +330,9 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
             hash_value2 = nextSlot(hash_value2);
         }
         if (hash_table2[hash_value2].from_node == probeInput->to_node) {
-//            *(result2 + (result2_size++)) = probeInput;
             count++;
         }
     }
-
-//    // build phase from edges3 to edges1:
-//    for (int i = 0; i < edges1_size; i++) {
-//        Edge_table *probeInput = edges1[i];
-//        // build for 2nd hash table:
-//        int hash_value3 = hash_mod(probeInput->from_node);
-//        while(hash_table3[hash_value3].label_edge != -1) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        hash_table3[hash_value3] = *probeInput;
-//    }
-//
-//    // 3rd probe phase:
-//    for (int j = 0; j < result2_size; j++) {
-//        Edge_table *probeInput = result2[j];
-//        int hash_value3 = hash_mod(probeInput->to_node);
-//
-//        while(hash_table3[hash_value3].label_edge !=  -1 &&
-//              hash_table2[hash_value3].from_node != probeInput->to_node) {
-//            hash_value3 = nextSlot(hash_value3);
-//        }
-//        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
-//            count++;
-//        }
-//    }
-
     free(result1);
 
     return count;
@@ -503,7 +477,7 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
     free(db);
 }
 
-int main(void) {
+/*int main(void) {
 //    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
 //
 //
@@ -518,43 +492,42 @@ int main(void) {
 ////    HashjoinInsertEdge(db, 2, 0, 2);
 ////    HashjoinInsertEdge(db, 4, 0, 2);
 ////    HashjoinInsertEdge(db, 3, 0, 2);
+////    HashjoinDeleteEdge(db, 1, 3, 1);
 ////    HashjoinDeleteEdge(db, 3, 4, 1);
-////    HashjoinDeleteEdge(db, 3, 2, 1);
-//
-//
-//    HashjoinInsertEdge(db, 0, 1, 0);
-//    HashjoinInsertEdge(db, 0, 2, 0);
-//    HashjoinInsertEdge(db, 0, 3, 0);
-//    HashjoinInsertEdge(db, 1, 3, 1);
-//    HashjoinInsertEdge(db, 1, 4, 1);
-//    HashjoinInsertEdge(db, 1, 2, 1);
-//    HashjoinInsertEdge(db, 3, 4, 1);
-//    HashjoinInsertEdge(db, 3, 2, 1);
-//    HashjoinInsertEdge(db, 2, 0, 2);
-//    HashjoinInsertEdge(db, 4, 0, 2);
-//    HashjoinInsertEdge(db, 3, 0, 2);
-//    HashjoinDeleteEdge(db, 1, 3, 1);
-//    HashjoinDeleteEdge(db, 3, 4, 1);
-//
-////    printEdge(((HashJoinTable *) db)->storage[0]);
-//    for (int i = 0; i < (db)->size; i++) {
-//        Edge_table *a = (db)->storage[i];
-//        printEdge(a);
-//    }
-//    int count = HashjoinRunQuery(db, 0, 1, 2);
-//    printf("triangle detected: %d\n", count);
-//
-//    HashjoinDeleteDatabase(db);
-//    return 0;
+////
+//////    printEdge(((HashJoinTable *) db)->storage[0]);
+////    for (int i = 0; i < (db)->size; i++) {
+////        Edge_table *a = (db)->storage[i];
+////        printEdge(a);
+////    }
+////    int count = HashjoinRunQuery(db, 0, 1, 2);
+////    printf("triangle detected: %d\n", count);
+////
+////    HashjoinDeleteDatabase(db);
+////    return 0;
 //
 //
 //
-////    // yifei's main:
-////    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(3);
-////    SortMergeJoinInsertEdge(db, 0, 1, 0);
-////    printDB((struct SMDB *)db);
-////    SortMergeJoinInsertEdge(db, 1, 2, 0);
-////    SortMergeJoinInsertEdge(db, 2, 0, 0);
-////    free(db);
+//    // yifei's main:
+//    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
+//    SortMergeJoinInsertEdge(db, 0, 1, 0);
+//    SortMergeJoinInsertEdge(db, 0, 2, 0);
+//    SortMergeJoinInsertEdge(db, 0, 3, 0);
+//    SortMergeJoinInsertEdge(db, 1, 3, 1);
+//    SortMergeJoinInsertEdge(db, 1, 4, 1);
+//    SortMergeJoinInsertEdge(db, 1, 2, 1);
+//    SortMergeJoinInsertEdge(db, 3, 4, 1);
+//    SortMergeJoinInsertEdge(db, 3, 2, 1);
+//    SortMergeJoinInsertEdge(db, 2, 0, 2);
+//    SortMergeJoinInsertEdge(db, 4, 0, 2);
+//    SortMergeJoinInsertEdge(db, 3, 0, 2);
+//    SortMergeJoinDeleteEdge(db, 1, 3, 1);
+//    SortMergeJoinDeleteEdge(db, 3, 4, 1);
 //
-}
+//    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
+//
+//    printf("AAAA, %i\n", count);
+//
+
+}*/
+
