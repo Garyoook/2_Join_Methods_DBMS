@@ -346,7 +346,7 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
         }
     }
 
-    free(result1);
+//    free(result1);
 
         // build phase from edges3 to edges1:
     for (int i = 0; i < edges1_size; i++) {
@@ -373,7 +373,7 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
         }
     }
 
-    free(result2);
+//    free(result2);
 
     return count;
 }
