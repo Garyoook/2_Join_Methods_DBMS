@@ -162,15 +162,6 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
     SMDB *second_result = connectEdges(first_result,third_edges);
     int res  = second_result->max_size;
-//    for(int i = 0; i < first_edges->size; i++) {
-//        free(first_edges->edges[i]);
-//    }
-//    for(int i = 0; i < second_edges->size; i++) {
-//        free(second_edges->edges[i]);
-//    }
-//    for(int i = 0; i < third_edges->size; i++) {
-//        free(third_edges->edges[i]);
-//    }
     free(first_edges->edges);
     free(second_edges->edges);
     free(third_edges->edges);
@@ -341,16 +332,14 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
             hash_value2 = nextSlot(hash_value2);
         }
         if (hash_table2[hash_value2].from_node == probeInput.to_node) {
-//            count++;
             result2[result2_size++] = probeInput;
         }
     }
 
-
         // build phase from edges3 to edges1:
     for (int i = 0; i < edges1_size; i++) {
         Edge_tuple *probeInput = edges1[i];
-        // build for 2nd hash table:
+        // build for 3rd hash table:
         int hash_value3 = hash_mod(probeInput->from_node);
         while(hash_table3[hash_value3].label_edge != -1) {
             hash_value3 = nextSlot(hash_value3);
@@ -516,15 +505,6 @@ int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLa
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
     SMDB *second_result = connectEdges(first_result,third_edges);
     int res  = second_result->max_size;
-//    for(int i = 0; i < first_edges->size; i++) {
-//        free(first_edges->edges[i]);
-//    }
-//    for(int i = 0; i < second_edges->size; i++) {
-//        free(second_edges->edges[i]);
-//    }
-//    for(int i = 0; i < third_edges->size; i++) {
-//        free(third_edges->edges[i]);
-//    }
     free(first_edges->edges);
     free(second_edges->edges);
     free(third_edges->edges);
