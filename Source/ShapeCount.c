@@ -256,8 +256,8 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
     int count = 0;
     int result_size = 0;
     Edge_table **result1 = (Edge_table **)malloc(sizeof(Edge_table *) * edges2_size);
-    int result2_size = 0;
-    Edge_table **result2 = (Edge_table **)malloc(sizeof(Edge_table *) * edges3_size);
+//    int result2_size = 0;
+//    Edge_table **result2 = (Edge_table **)malloc(sizeof(Edge_table *) * edges3_size);
     Edge_table hash_table[max_alloc_size + 1]; // = (Edge_table *)malloc(sizeof(Edge) * max_alloc_size);
     Edge_table hash_table2[max_alloc_size + 1];
     Edge_table hash_table3[max_alloc_size + 1];
@@ -319,7 +319,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
             hash_value2 = nextSlot(hash_value2);
         }
         if (hash_table2[hash_value2].from_node == probeInput->to_node) {
-            *(result2 + (result2_size++)) = probeInput;
+//            *(result2 + (result2_size++)) = probeInput;
             count++;
         }
     }
