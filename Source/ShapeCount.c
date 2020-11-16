@@ -198,7 +198,8 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
     int resultsize = 0;
     Edge_table **leftEdges = first_edges->edges;
     Edge_table **rightEdges = second_edges->edges;
-    Edge_table **result = (Edge_table **) malloc(sizeof(Edge_table*) * rightsize);
+    SMDB *db = (SMDB *) SortMergeJoinAllocateDatabase(rightsize);
+    Edge_table **result = db->edges;
     int count = 0;
     while (lefti < leftsize && righti < rightsize){
         if (leftEdges[lefti]->to_node < rightEdges[righti]->from_node){
@@ -215,7 +216,7 @@ struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
             count++;
         }
     }
-    SMDB *db = (SMDB *) SortMergeJoinAllocateDatabase(rightsize);
+
     db->edges = result;
     db->size = count;
     db->max_size = resultsize;
@@ -517,54 +518,55 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
     free(db);
 }
 
-//int main(void) {
-////    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
-////    HashjoinInsertEdge(db, 0, 1, 0);
-////    HashjoinInsertEdge(db, 0, 2, 0);
-////    HashjoinInsertEdge(db, 0, 3, 0);
-////    HashjoinInsertEdge(db, 1, 3, 1);
-////    HashjoinInsertEdge(db, 1, 4, 1);
-////    HashjoinInsertEdge(db, 1, 2, 1);
-////    HashjoinInsertEdge(db, 3, 4, 1);
-////    HashjoinInsertEdge(db, 3, 2, 1);
-////    HashjoinInsertEdge(db, 2, 0, 2);
-////    HashjoinInsertEdge(db, 4, 0, 2);
-////    HashjoinInsertEdge(db, 3, 0, 2);
-////    HashjoinDeleteEdge(db, 1, 3, 1);
-////    HashjoinDeleteEdge(db, 3, 4, 1);
-////
-//////    printEdge(((HashJoinTable *) db)->storage[0]);
-////    for (int i = 0; i < (db)->size; i++) {
-////        Edge_table *a = (db)->storage[i];
-////        printEdge(a);
-////    }
-////    int count = HashjoinRunQuery(db, 0, 1, 2);
-////    printf("triangle detected: %d\n", count);
-////
-////    HashjoinDeleteDatabase(db);
-////    return 0;
+int amain(void) {
+//    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
+//    HashjoinInsertEdge(db, 0, 1, 0);
+//    HashjoinInsertEdge(db, 0, 2, 0);
+//    HashjoinInsertEdge(db, 0, 3, 0);
+//    HashjoinInsertEdge(db, 1, 3, 1);
+//    HashjoinInsertEdge(db, 1, 4, 1);
+//    HashjoinInsertEdge(db, 1, 2, 1);
+//    HashjoinInsertEdge(db, 3, 4, 1);
+//    HashjoinInsertEdge(db, 3, 2, 1);
+//    HashjoinInsertEdge(db, 2, 0, 2);
+//    HashjoinInsertEdge(db, 4, 0, 2);
+//    HashjoinInsertEdge(db, 3, 0, 2);
+//    HashjoinDeleteEdge(db, 1, 3, 1);
+//    HashjoinDeleteEdge(db, 3, 4, 1);
 //
+////    printEdge(((HashJoinTable *) db)->storage[0]);
+//    for (int i = 0; i < (db)->size; i++) {
+//        Edge_table *a = (db)->storage[i];
+//        printEdge(a);
+//    }
+//    int count = HashjoinRunQuery(db, 0, 1, 2);
+//    printf("triangle detected: %d\n", count);
 //
-//
-//    // yifei's main:
-//    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
-//    SortMergeJoinInsertEdge(db, 0, 1, 0);
-//    SortMergeJoinInsertEdge(db, 0, 2, 0);
-//    SortMergeJoinInsertEdge(db, 0, 3, 0);
-//    SortMergeJoinInsertEdge(db, 1, 3, 1);
-//    SortMergeJoinInsertEdge(db, 1, 4, 1);
-//    SortMergeJoinInsertEdge(db, 1, 2, 1);
-//    SortMergeJoinInsertEdge(db, 3, 4, 1);
-//    SortMergeJoinInsertEdge(db, 3, 2, 1);
-//    SortMergeJoinInsertEdge(db, 2, 0, 2);
-//    SortMergeJoinInsertEdge(db, 4, 0, 2);
-//    SortMergeJoinInsertEdge(db, 3, 0, 2);
-//    SortMergeJoinDeleteEdge(db, 1, 3, 1);
-//    SortMergeJoinDeleteEdge(db, 3, 4, 1);
-//
-//    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
-//
-//    printf("AAAA, %i\n", count);
-//
-//    SortMergeJoinDeleteDatabase(db);
-//}
+//    HashjoinDeleteDatabase(db);
+//    return 0;
+
+
+
+    // yifei's main:
+    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
+    SortMergeJoinInsertEdge(db, 0, 1, 0);
+    SortMergeJoinInsertEdge(db, 0, 2, 0);
+    SortMergeJoinInsertEdge(db, 0, 3, 0);
+    SortMergeJoinInsertEdge(db, 1, 3, 1);
+    SortMergeJoinInsertEdge(db, 1, 4, 1);
+    SortMergeJoinInsertEdge(db, 1, 2, 1);
+    SortMergeJoinInsertEdge(db, 3, 4, 1);
+    SortMergeJoinInsertEdge(db, 3, 2, 1);
+    SortMergeJoinInsertEdge(db, 2, 0, 2);
+    SortMergeJoinInsertEdge(db, 4, 0, 2);
+    SortMergeJoinInsertEdge(db, 3, 0, 2);
+    SortMergeJoinDeleteEdge(db, 1, 3, 1);
+    SortMergeJoinDeleteEdge(db, 3, 4, 1);
+
+    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
+
+    printf("AAAA, %i\n", count);
+
+    SortMergeJoinDeleteDatabase(db);
+    return 0;
+}
