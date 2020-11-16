@@ -25,48 +25,26 @@
 2. Interpretation of Hash Join
     We use the struct Edge_tuple above and a struct HashJoinTable for the Hash join method. HashJoinTable contains
     a list of Edge_tuple called 'edges', a int for its size, and a unsigned long for its maximum allocation size.
-    In the allocation stage, the list of Edge is allocated together with the HashJoinDatabase itself.
 
     At the insertion stage, an Edge_tuple is allocated and assigned with the attributes values input.
     At the edge delete stage, the target edge in 'edges' for deletion is marked as deleted, but it still occupies
     memory space, and this part of memory will be freed when the whole dataset is deleted.
 
-    When we run the query, we allocate 3 empty array of Edge_tuple, for storing tuples with 3 target labels.
-    and the size of these 3 arrays are all remembered respectively. Then they are passed into a function 'HashJoin()'
-    for the actual Hash join process: first the hash tables of Edge_tuples are initialised with all attributes
-    valued -1.
-    In the first build phase, the 'to_node' attributes of the first group of edges are hashed using the mod
-    hasing method, and the current tuple is stored in the hash table with index of the hash value. The hash value
-    calculated is based on slots with a function 'nextSlot' to execute same hash value occurrence.
-    Then we probe the build result by edges in the second group by matching the hash values of edges, and build a
-    result list of edges with the edges matched.
-    Then based on the matching result of previous step, we can build anther hash table of 'from_node' of third group
-    of edges and used the 'to_node' of the result edges of previous result set, hence we can have the linked edges
-    from the first group to the third group. Finally, we check the remaining edges' 'to_node' with the 'from_node'
-    attribute of edges in the first group to finally settle down the triangles. Finally, the counts of the number of
-    triangles are returned.
+    Run Query:
+    By hashing and probing for 3 times in total (between edges group 1 vs 2, 2 vs 3 and 3 vs 1) we finally locate
+    the triangles. Finally, the counts of the number of triangles are returned.
 
 3. Analyse the performance
-
-------------------------------------------------------------------------------------------------------
-Benchmark                                                            Time             CPU   Iterations
-------------------------------------------------------------------------------------------------------
-GraphQueryBenchmark<HashjoinImplementation>/64/32               271170 ns       270566 ns         2582
-GraphQueryBenchmark<HashjoinImplementation>/128/32              903044 ns       900719 ns          756
-GraphQueryBenchmark<HashjoinImplementation>/256/32             3395734 ns      3356182 ns          212
-GraphQueryBenchmark<HashjoinImplementation>/512/32            13215616 ns     13075536 ns           54
-GraphQueryBenchmark<HashjoinImplementation>/1024/32           51766439 ns     51632894 ns           13
-GraphQueryBenchmark<HashjoinImplementation>/2048/32          204633778 ns    204072275 ns            3
-GraphQueryBenchmark<SortMergeJoinImplementation>/64/32          204025 ns       202698 ns         3497
-GraphQueryBenchmark<SortMergeJoinImplementation>/128/32         661341 ns       657238 ns          998
-GraphQueryBenchmark<SortMergeJoinImplementation>/256/32        2183323 ns      2168346 ns          330
-GraphQueryBenchmark<SortMergeJoinImplementation>/512/32        8206694 ns      8175023 ns           86
-GraphQueryBenchmark<SortMergeJoinImplementation>/1024/32      33129356 ns     32864105 ns           21
-GraphQueryBenchmark<SortMergeJoinImplementation>/2048/32     129867919 ns    129006856 ns            5
-
+In the performance report, Sort Merge Join method can run the iteration under 64, 128, 256, 512 KiB is approx. 2600,
+860, 250 and 60 respectively, while the Hash Join method can only reach approx. 1870 530, 150 and 40. The Sort Merge
+Join in obviously faster than the Hash Join method under dataset in this test.
 
 Generally speaking,sort merge joins are faster and uses less memory than hash joins. The sort join has a complexity of
 O(n^2) + O(m^2) + O(m*n) in the worst case, where n is the size of the left relation and m is the size of the right
 relation. The previous O(n^2) + O(m^2) are the complexity of the quick sort process and the O(m*n) is the merge
-process. Because the index increases once the matching is found, every tuple in the right relation only goes through once.
-In the worst case, every tuples in the right relation goes through the whole left relation. Hence,O(m+n) in the worst case.
+process. Because the index increases once the matching is found, every tuple in the right relation only goes through
+once. In the worst case, every tuples in the right relation goes through the whole left relation. Hence,O(m+n) in
+the worst case.
+
+Theoretically, hash join can be very fast for small dataset, but in this coursework, the data can be sorted easily in
+the process of query, so the actual run time of sort merge join is faster.
