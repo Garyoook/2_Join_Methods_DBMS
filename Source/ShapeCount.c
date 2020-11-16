@@ -401,9 +401,9 @@ int HashjoinRunQuery(HashjoinDatabase database, int edgeLabel1, int edgeLabel2, 
 
     int count_result = HashJoin(db_label1, size1, db_label2, size2, db_label3, size3, db->max_alloc_size);
 
-    free(db_label1);
-    free(db_label2);
-    free(db_label3);
+//    free(db_label1);
+//    free(db_label2);
+//    free(db_label3);
 
     return count_result;
 }
