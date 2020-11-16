@@ -278,8 +278,8 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
     int count = 0;
     int result_size = 0;
     int result2_size = 0;
-    Edge_tuple **result1 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges2_size);
-    Edge_tuple **result2 = (Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges3_size);
+    Edge_tuple result1[edges2_size]; //(Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges2_size);
+    Edge_tuple result2[edges3_size]; //(Edge_tuple **)malloc(sizeof(Edge_tuple *) * edges3_size);
     Edge_tuple hash_table[max_alloc_size + 1]; // = (Edge_table *)malloc(sizeof(Edge) * max_alloc_size);
     Edge_tuple hash_table2[max_alloc_size + 1];
     Edge_tuple hash_table3[max_alloc_size + 1];
@@ -316,7 +316,7 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
             hash_value = nextSlot(hash_value);
         }
         if (hash_table[hash_value].to_node == probeInput->from_node) {
-            *(result1 + (result_size++)) = probeInput;
+            result1[result_size++] = *probeInput;
         }
     }
 
@@ -333,16 +333,16 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
 
     // second probe phase:
     for (int j = 0; j < result_size; j++) {
-        Edge_tuple *probeInput = result1[j];
-        int hash_value2 = hash_mod(probeInput->to_node);
+        Edge_tuple probeInput = result1[j];
+        int hash_value2 = hash_mod(probeInput.to_node);
 
         while(hash_table2[hash_value2].label_edge !=  -1 &&
-              hash_table2[hash_value2].from_node != probeInput->to_node) {
+              hash_table2[hash_value2].from_node != probeInput.to_node) {
             hash_value2 = nextSlot(hash_value2);
         }
-        if (hash_table2[hash_value2].from_node == probeInput->to_node) {
+        if (hash_table2[hash_value2].from_node == probeInput.to_node) {
 //            count++;
-            *(result2 + (result2_size++)) = probeInput;
+            result2[result2_size++] = probeInput;
         }
     }
 
@@ -360,14 +360,14 @@ int HashJoin(Edge_tuple **edges1, int edges1_size, Edge_tuple **edges2, int edge
 
     // 3rd probe phase:
     for (int j = 0; j < result2_size; j++) {
-        Edge_tuple *probeInput = result2[j];
-        int hash_value3 = hash_mod(probeInput->to_node);
+        Edge_tuple probeInput = result2[j];
+        int hash_value3 = hash_mod(probeInput.to_node);
 
         while(hash_table3[hash_value3].label_edge !=  -1 &&
-              hash_table2[hash_value3].from_node != probeInput->to_node) {
+              hash_table2[hash_value3].from_node != probeInput.to_node) {
             hash_value3 = nextSlot(hash_value3);
         }
-        if (hash_table2[hash_value3].from_node == probeInput->to_node) {
+        if (hash_table2[hash_value3].from_node == probeInput.to_node) {
             count++;
         }
     }
