@@ -45,6 +45,6 @@ GraphQueryBenchmark<SortMergeJoinImplementation>/2048/32     163205649 ns    163
 
 Generally speaking,sort merge joins are faster and uses less memory than hash joins. The sort join has a complexity of
 O(n^2) + O(m^2) + O(m*n) in the worst case, where n is the size of the left relation and m is the size of the right
-relation. The previous O(n^2) + O(m^2) are the complexity of the quick sort process and the O(m+n) is the merge
+relation. The previous O(n^2) + O(m^2) are the complexity of the quick sort process and the O(m*n) is the merge
 process. Because the index increases once the matching is found, every tuple in the right relation only goes through once.
 In the worst case, every tuples in the right relation goes through the whole left relation. Hence,O(m+n) in the worst case.
