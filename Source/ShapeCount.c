@@ -359,6 +359,7 @@ int HashJoin(Edge_table **edges1, int edges1_size, Edge_table **edges2, int edge
 //        }
 //    }
 
+    free(result1);
 
     return count;
 }
@@ -411,6 +412,9 @@ void HashjoinDeleteEdge(HashjoinDatabase database, int fromNodeID, int toNodeID,
 
 void HashjoinDeleteDatabase(HashjoinDatabase database) {
     HashJoinTable *db = (HashJoinTable *) database;
+    for (int i = 0; i < db->size; ++i) {
+        free(db->storage[i]);
+    }
     free(db->storage);
     free(db);
 }
@@ -492,6 +496,9 @@ void CompetitionDeleteEdge(CompetitionDatabase database, int fromNodeID, int toN
 
 void CompetitionDeleteDatabase(CompetitionDatabase database) {
     HashJoinTable *db = (HashJoinTable *) database;
+    for (int i = 0; i < db->size; ++i) {
+        free(db->storage[i]);
+    }
     free(db->storage);
     free(db);
 }
@@ -530,8 +537,8 @@ void CompetitionDeleteDatabase(CompetitionDatabase database) {
 //    HashjoinDeleteEdge(db, 3, 4, 1);
 //
 ////    printEdge(((HashJoinTable *) db)->storage[0]);
-//    for (int i = 0; i < ((HashJoinTable *) db)->size; i++) {
-//        Edge_table *a = ((HashJoinTable *) db)->storage[i];
+//    for (int i = 0; i < (db)->size; i++) {
+//        Edge_table *a = (db)->storage[i];
 //        printEdge(a);
 //    }
 //    int count = HashjoinRunQuery(db, 0, 1, 2);
