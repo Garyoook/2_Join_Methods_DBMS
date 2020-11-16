@@ -538,6 +538,60 @@ int CompetitionRunQuery(CompetitionDatabase database, int edgeLabel1, int edgeLa
     return res;
 }
 
+int amain(void) {
+    HashJoinTable *db = (HashJoinTable *) HashjoinAllocateDatabase(100);
+    HashjoinInsertEdge(db, 0, 1, 0);
+    HashjoinInsertEdge(db, 0, 2, 0);
+    HashjoinInsertEdge(db, 0, 3, 0);
+    HashjoinInsertEdge(db, 1, 3, 1);
+    HashjoinInsertEdge(db, 1, 4, 1);
+    HashjoinInsertEdge(db, 1, 2, 1);
+    HashjoinInsertEdge(db, 3, 4, 1);
+    HashjoinInsertEdge(db, 3, 2, 1);
+    HashjoinInsertEdge(db, 2, 0, 2);
+    HashjoinInsertEdge(db, 4, 0, 2);
+    HashjoinInsertEdge(db, 3, 0, 2);
+    HashjoinDeleteEdge(db, 1, 3, 1);
+    HashjoinDeleteEdge(db, 3, 4, 1);
+
+//    printEdge(((HashJoinTable *) db)->storage[0]);
+    for (int i = 0; i < (db)->size; i++) {
+        Edge_tuple *a = (db)->edges[i];
+        printEdge(a);
+    }
+    int count = HashjoinRunQuery(db, 0, 1, 2);
+    printf("triangle detected: %d\n", count);
+
+    HashjoinDeleteDatabase(db);
+    return 0;
+
+
+
+//    // yifei's main:
+//    SortMergeJoinDatabase db = SortMergeJoinAllocateDatabase(100);
+//    SortMergeJoinInsertEdge(db, 0, 1, 0);
+//    SortMergeJoinInsertEdge(db, 0, 2, 0);
+//    SortMergeJoinInsertEdge(db, 0, 3, 0);
+//    SortMergeJoinInsertEdge(db, 1, 3, 1);
+//    SortMergeJoinInsertEdge(db, 1, 4, 1);
+//    SortMergeJoinInsertEdge(db, 1, 2, 1);
+//    SortMergeJoinInsertEdge(db, 3, 4, 1);
+//    SortMergeJoinInsertEdge(db, 3, 2, 1);
+//    SortMergeJoinInsertEdge(db, 2, 0, 2);
+//    SortMergeJoinInsertEdge(db, 4, 0, 2);
+//    SortMergeJoinInsertEdge(db, 3, 0, 2);
+//    SortMergeJoinDeleteEdge(db, 1, 3, 1);
+//    SortMergeJoinDeleteEdge(db, 3, 4, 1);
+//
+//    int count = SortMergeJoinRunQuery(db, 0, 1, 2);
+//
+//    printf("AAAA, %i\n", count);
+//
+//    SortMergeJoinDeleteDatabase(db);
+//    return 0;
+}
+
+
 
 
 
