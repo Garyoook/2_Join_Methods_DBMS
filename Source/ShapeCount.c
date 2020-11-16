@@ -20,7 +20,7 @@ typedef void *SortMergeJoinDatabase;
 void printDB(struct SMDB *db);
 
 
-SMDB *connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max);
+SMDB *connectEdges(const SMDB *first_edges, const SMDB *second_edges);
 
 void InsertEdge(Edge_table *edge, SMDB *db);
 
@@ -158,9 +158,9 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     }
 
     //compare firstEdge.to = secondEdge.from and firstEdge.label = 0
-    SMDB *first_result = connectEdges(first_edges, second_edges,second_edges->size);
+    SMDB *first_result = connectEdges(first_edges, second_edges);
     //compare secondEdge.to = thirdEdge.from and firstEdge.label = 1
-    SMDB *second_result = connectEdges(first_result,third_edges,first_result->max_size);
+    SMDB *second_result = connectEdges(first_result,third_edges);
     int res  = second_result->max_size;
     free(first_edges);
     free(second_edges);
@@ -170,7 +170,7 @@ int SortMergeJoinRunQuery(SortMergeJoinDatabase database, int edgeLabel1, int ed
     return res;
 }
 
-struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges,int max)
+struct SMDB*connectEdges(const SMDB *first_edges, const SMDB *second_edges)
 {
     //Sort the first edges by ascending the to values and sort the second edges by ascending the from value
     quickSort(first_edges->edges, 0, first_edges->size - 1, TO);
