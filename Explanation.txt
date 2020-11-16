@@ -16,6 +16,11 @@
    the second edges group. We repeat the above step with the previous result and the third edge group to get the new
    database. The final result will be the max_size of the database.
 
+   There are two new struc created for the sort merge join. One is struct Edge_tuple. It has three attributes: label_edge,
+   from_node and to_node. It is also used in Hash join. The other one is called struc SMDB, which stand for "Sort merge
+   database". It records the all the edges inserted in the database, which is stored as an array of struct Edge_tuple in
+   edges attributes. Another two attributes are size and max_size which are actual size of edges and the totalNumberOfEdgesInTheEnd.
+   The max_size is also used to record the count of matching in the merge process, as mentioned before.
 
 2. Interpretation of Hash Join
 
